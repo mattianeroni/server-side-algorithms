@@ -40,6 +40,7 @@ class Algorithm(Base):
     name = Column(String, unique=True, nullable=False)
     desc = Column(String(150), nullable=True, default="")
     cost = Column(Numeric(precision=2), nullable=False)
+    readme = Column(String, nullable=True)
 
     # Category the algorithm belongs to
     category_id = Column(Integer, ForeignKey('categories.id'))
