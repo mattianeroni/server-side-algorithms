@@ -1,19 +1,20 @@
-from typing import List, Union
+from  __future__ import annotations
+from typing import List, Union, Optional
 import datetime
 
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
+
 
 
 class UserCreate(BaseModel):
-    email : str 
+    email : EmailStr 
     password : str 
-    amount : float 
-    parsonal_key : str 
+    amount : int
 
 
 class User(BaseModel):
     id : int 
-    email : str 
+    email : EmailStr 
     calls : List[Call] = []
     algorithms : List[Algorithm] = []
 
@@ -21,6 +22,18 @@ class User(BaseModel):
         orm_mode = True
 
 
+class UserUpdate(BaseModel):
+    email : Optional[EmailStr] = None
+    password : Optional[str] = None
+    amount : Optional[int] = None
+
+
+class UserKey(BaseModel):
+    email : EmailStr
+    personal_key : str
+
+    class Config:
+        orm_mode = True
 
 
 class CategoryCreate(BaseModel):
@@ -38,11 +51,15 @@ class Category(BaseModel):
         orm_mode = True
 
 
+class CategoryUpdate(BaseModel):
+    name : Optional[str] = None 
+    desc : Optional[str] = None
+
 
 
 class AlgorithmCreate(BaseModel):
     name : str 
-    cost : float 
+    cost : int 
     desc : Union[str, None] = None
     readme : Union[str, None] = None
     category_id : int 
@@ -65,8 +82,6 @@ class Algorithm(BaseModel):
         orm_mode = True
 
 
-
-
 class CallCreate(BaseModel):
     datetime : datetime.datetime 
     success : bool 
@@ -85,3 +100,4 @@ class Call(BaseModel):
 
     class Config:
         orm_mode = True
+        

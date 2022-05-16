@@ -9,11 +9,14 @@ import datetime
 class User(Base):
     __tablename__ = "users"
 
-    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    id = Column(Integer, primary_key=True, index=True)
     email = Column(String, unique=True, index=True, nullable=False)
     password = Column(String, nullable=False)
-    amount = Column(Numeric(precision=2), default=0.0, nullable=False)
-    personal_key = Column(String, unique=True, index=True, nullable=False)
+    salt_password = Column(String, nullable=False)
+    amount = Column(Integer, nullable=False)
+    personal_key = Column(String, index=True, nullable=False)
+    salt_key = Column(String, nullable=False)
+
 
     # Back population of algorithms made by this user 
     algorithms = relationship("Algorithm", back_populates="author")
@@ -25,7 +28,7 @@ class User(Base):
 class Category(Base):
     __tablename__ = "categories"
 
-    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    id = Column(Integer, primary_key=True, index=True)
     name = Column(String, unique=True, index=True)
     desc = Column(String(150), nullable=True, default="")
 
@@ -36,10 +39,10 @@ class Category(Base):
 class Algorithm(Base):
     __tablename__ = "algorithms"
 
-    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    id = Column(Integer, primary_key=True, index=True)
     name = Column(String, unique=True, nullable=False)
     desc = Column(String(150), nullable=True, default="")
-    cost = Column(Numeric(precision=2), nullable=False)
+    cost = Column(Integer, nullable=False)
     readme = Column(String, nullable=True)
 
     # Category the algorithm belongs to
@@ -57,7 +60,7 @@ class Algorithm(Base):
 class Call(Base):
     __tablename__ = "calls"
 
-    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    id = Column(Integer, primary_key=True, index=True)
     datetime = Column(DateTime, default=datetime.datetime.now)
     success = Column(Boolean)
 
