@@ -12,32 +12,34 @@ import secrets
 
 # Users methods from here.
 
-def get_user(db: Session, user_id: int) -> schemas.User:
+def get_user(db: Session, user_id: int):
     return db.query(models.User).filter(models.User.id == user_id).first()
 
 
-def get_user_by_email(db: Session, email: str) -> schemas.User:
+def get_user_by_email(db: Session, email: str):
     return db.query(models.User).filter(models.User.email == email).first()
 
 
-def get_users(db: Session, skip: int = 0, limit: int = 100) -> List[schemas.User]:
+def get_users(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.User).offset(skip).limit(limit).all()
+
+
+def get_user_by_key(db: Session, key: str):
+    return db.query(models.User).filter(models.User.personal_key == key).first()    
 
 
 def create_user(db: Session, user: schemas.UserCreate) -> schemas.User:
     salt = crypt.mksalt(crypt.METHOD_SHA512)
     password = crypt.crypt(user.password, salt=salt)
 
-    salt_key = crypt.mksalt(crypt.METHOD_SHA512)
     key = "".join([secrets.choice(string.ascii_letters + string.digits + string.punctuation) for _ in range(16)])
-    personal_key = crypt.crypt(key, salt=salt_key)
+    personal_key = crypt.crypt(key)
 
     db_user = models.User(
         email=user.email, 
         password=password, 
-        salt_password=salt, 
+        salt=salt, 
         personal_key=personal_key,
-        salt_key=salt_key,
         amount=user.amount
     )
 

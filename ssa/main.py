@@ -8,7 +8,7 @@ from ssa.database import SessionLocal, engine
 
 models.Base.metadata.create_all(bind=engine)
 
-app = FastAPI()
+app = FastAPI(title="ServerSideAlgorithms")
 
 
 def get_db():

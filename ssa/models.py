@@ -12,10 +12,9 @@ class User(Base):
     id = Column(Integer, primary_key=True, index=True)
     email = Column(String, unique=True, index=True, nullable=False)
     password = Column(String, nullable=False)
-    salt_password = Column(String, nullable=False)
-    amount = Column(Integer, nullable=False)
+    salt = Column(String, nullable=False, default="")
+    amount = Column(Integer, nullable=False, default=0)
     personal_key = Column(String, index=True, nullable=False)
-    salt_key = Column(String, nullable=False)
 
 
     # Back population of algorithms made by this user 
