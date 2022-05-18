@@ -1,4 +1,5 @@
 <div id="top"></div>
+
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
@@ -9,22 +10,17 @@
 <br />
 <div align="center">
   <a href="https://github.com/mattianeroni/server-side-algorithms">
-    <img src="images/logo.png" alt="Logo" width="100" height="120">
+    <img src="images/logo.png" alt="Logo" width="260" height="450">
   </a>
-
-<h3 align="center">Server Side Algorithms</h3>
-
+  
+  <h1 align="center">Server Side Algorithms</h1>
+  
   <p align="center">
     project_description
     <br />
-    <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
     <br />
+    <a href="https://github.com/mattianeroni/server-side-algorithms"><strong>View Web Site</a>
     <br />
-    <a href="https://github.com/github_username/repo_name">View Demo</a>
-    ·
-    <a href="https://github.com/github_username/repo_name/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/github_username/repo_name/issues">Request Feature</a>
   </p>
 </div>
 
