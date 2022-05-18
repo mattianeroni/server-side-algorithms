@@ -23,7 +23,7 @@ def get_db():
 
 # Users end points from here.
 
-@app.post("/users/", response_model=schemas.User)
+@app.post("/users/", response_model=schemas.UserBasic)
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     db_user = crud.get_user_by_email(db, email=user.email)
     if db_user:
@@ -31,7 +31,7 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     return crud.create_user(db=db, user=user)
 
 
-@app.get("/users/", response_model=List[schemas.User])
+@app.get("/users/", response_model=List[schemas.UserBasic])
 def get_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     users = crud.get_users(db, skip=skip, limit=limit)
     return users
@@ -49,7 +49,7 @@ def get_user(user_id: int, db: Session = Depends(get_db)):
 
 # Categories end points from here.
 
-@app.post("/categories/", response_model=schemas.Category)
+@app.post("/categories/", response_model=schemas.CategoryBasic)
 def create_user(category: schemas.CategoryCreate, db: Session = Depends(get_db)):
     db_cat = crud.get_category_by_name(db, name=category.name)
     if db_cat:
@@ -57,7 +57,7 @@ def create_user(category: schemas.CategoryCreate, db: Session = Depends(get_db))
     return crud.create_category(db, category=category)
 
 
-@app.get("/categories/", response_model=List[schemas.Category])
+@app.get("/categories/", response_model=List[schemas.CategoryBasic])
 def get_categories(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     categories = crud.get_categories(db, skip=skip, limit=limit)
     return categories

@@ -1,19 +1,4 @@
-from __future__ import annotations
-from .schemas import (
-    UserCreate, 
-    User, 
-    UserBasic,
-    UserUpdate, 
-    UserGetKey, 
-    UserAskKey,
-    CategoryCreate, 
-    CategoryBasic,
-    Category, 
-    CategoryUpdate,
-    AlgorithmCreate,
-    AlgorithmBasic,
-    Algorithm,
-    CallCreate,
-    CallBasic,
-    Call
-)
+from .users import UserCreate, UserBasic, User, UserUpdate, UserAskKey, UserGetKey
+from .categories import CategoryCreate, CategoryBasic, Category, CategoryUpdate
+from .algorithms import AlgorithmCreate, AlgorithmBasic, AlgorithmUpdate, Algorithm
+from .calls import Call, CallCreate, CallBasic
