@@ -191,23 +191,19 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 
 
-<!-- CONTACT -->
 ## Contact
 
 Mattia Neroni, Ph.D., Eng. - mneroni@unimore.it
 
-Project Link: [https://github.com/mattianeroni/server-side-algorithms]
+Project Link: https://github.com/mattianeroni/server-side-algorithms
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
 
-<!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-* []()
-* []()
-* []()
+This project is completely self maintained.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
