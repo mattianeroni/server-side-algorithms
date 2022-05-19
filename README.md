@@ -15,8 +15,14 @@
   
   <h1 align="center">Server Side Algorithms</h1>
   
-  <p align="center">
-    Server Side Algorithms (SSA) is a platform with the objective to cover the gap between applications developers and scientists. Through a standard API described in our documentation (a link will be available soon), the registered developers are allowed to send a HTTP request to our server by requiring the execution of a specific algorithm on the provided data. These requests will be processed in real time and there is no limit to the number of requests a registered user can make. In this way, developers with no scientific background 
+  <p align="justify">
+    Server Side Algorithms (SSA) is a platform with the objective to cover the gap between applications developers and scientists. Through a standard API described in our documentation (a link will be available soon), the registered developers are allowed to send HTTP requests to our server by requiring the execution of a specific algorithm on the provided data. These requests will be processed in real time and there is no limit to the number of requests a registered user can make. 
+  </p>
+  <p align="justify">
+    In this way, developers with no scientific background have the opportunity to incorporate in their own applications complex algorithms and procedures, which have been developed by the experts of the sector and reviewed by our representatives.
+  </p>
+  <p align="justify">
+    On the other hand, scientists with a solid background in algorithms, high-performance computing, combinatorial optimization, machine learning, and many other fields, can upload on the platform their implementations. In this way, they will gain visibility and will have the opportunity to earn from the platform safely and without any need to incorporate their algorithms in an application or spend time in the development of a user interface.
     <br />
     <br />
     <a href="https://github.com/mattianeroni/server-side-algorithms"><strong>View Web Site</a>
@@ -37,16 +43,14 @@
       </ul>
     </li>
     <li>
-      <a href="#getting-started">Getting Started</a>
+      <a href="#usage">Usage</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
+        <li><a href="#examples">Examples</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
+    <li><a href="#content">Content</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
@@ -89,7 +93,7 @@ To get a local copy up and running follow these simple example steps.
 1. Get a free API Key at [https://example.com](https://example.com)
 2. Clone the repo
    ```sh
-   git clone https://github.com/github_username/repo_name.git
+   git clone https://github.com/mattianeroni/server-side-algorithms.git
    ```
 3. Install NPM packages
    ```sh
@@ -99,31 +103,27 @@ To get a local copy up and running follow these simple example steps.
    ```js
    const API_KEY = 'ENTER YOUR API';
    ```
-
+   
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
-
-<!-- USAGE EXAMPLES -->
-## Usage
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
+### Examples
+   
 
 <p align="right">(<a href="#top">back to top</a>)</p>
+
 
 
 
 <!-- ROADMAP -->
-## Roadmap
+## Content
 
 - [ ] Feature 1
 - [ ] Feature 2
 - [ ] Feature 3
     - [ ] Nested Feature
 
-See the [open issues](https://github.com/github_username/repo_name/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/github_username/repo_name/issues) for an accurate description of proposed features.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -148,7 +148,8 @@ Don't forget to give the project a star! Thanks again!
 
 ## Contact
 
-Mattia Neroni, Ph.D., Eng. - mneroni@unimore.it
+
+Mattia Neroni, Ph.D., Eng. - mneroni@unimore.it - LinkedIn: [mylinkedin]
 
 Project Link: https://github.com/mattianeroni/server-side-algorithms
 
@@ -157,6 +158,7 @@ Project Link: https://github.com/mattianeroni/server-side-algorithms
 
 
 ## Acknowledgments
+
 
 This project is completely self maintained.
 
@@ -174,5 +176,5 @@ This project is completely self maintained.
 [stars-url]: https://github.com/mattianeroni/server-side-algorithms/stargazers
 [issues-shield]: https://img.shields.io/github/issues/mattianeroni/server-side-algorithms.svg?style=for-the-badge
 [issues-url]: https://github.com/mattianeroni/server-side-algorithms/issues
-[linkedin-url]: https://www.linkedin.com/in/mattia-neroni-081965101/
+[mylinkedin]: https://www.linkedin.com/in/mattia-neroni-081965101/
 [product-screenshot]: images/screenshot.png
