@@ -16,7 +16,7 @@
   <h1 align="center">Server Side Algorithms</h1>
   
   <p align="center">
-    project_description
+    Server Side Algorithms (SSA) is a platform with the objective to cover the gap between applications developers and scientists. Through a standard API described in our documentation (a link will be available soon), the registered developers are allowed to send a HTTP request to our server by requiring the execution of a specific algorithm on the provided data. These requests will be processed in real time and there is no limit to the number of requests a registered user can make. In this way, developers with no scientific background 
     <br />
     <br />
     <a href="https://github.com/mattianeroni/server-side-algorithms"><strong>View Web Site</a>
@@ -54,7 +54,6 @@
 
 
 
-<!-- ABOUT THE PROJECT -->
 ## About The Project
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
@@ -67,31 +66,22 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 
 ### Built With
 
-* [Next.js](https://nextjs.org/)
-* [React.js](https://reactjs.org/)
-* [Vue.js](https://vuejs.org/)
-* [Angular](https://angular.io/)
-* [Svelte](https://svelte.dev/)
-* [Laravel](https://laravel.com)
-* [Bootstrap](https://getbootstrap.com)
-* [JQuery](https://jquery.com)
+* [FastAPI](https://fastapi.tiangolo.com/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
 
-<!-- GETTING STARTED -->
-## Getting Started
+## Usage
 
 This is an example of how you may give instructions on setting up your project locally.
 To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
+* FastAPI
   ```sh
-  npm install npm@latest -g
+  pip install fastapi
   ```
 
 ### Installation
