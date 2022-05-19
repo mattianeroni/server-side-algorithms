@@ -18,6 +18,11 @@
   <p align="justify">
     Server Side Algorithms (SSA) is a platform with the objective to cover the gap between applications developers and scientists. Through a standard API described in our documentation (a link will be available soon), the registered developers are allowed to send HTTP requests to our server by requiring the execution of a specific algorithm on the provided data. These requests will be processed in real time and there is no limit to the number of requests a registered user can make. 
   </p>
+  
+  <a href="https://github.com/mattianeroni/server-side-algorithms">
+    <img src="images/scheme.png" alt="Logo" width="700" height="500">
+  </a>
+  
   <p align="justify">
     In this way, developers with no scientific background have the opportunity to incorporate in their own applications complex algorithms and procedures, which have been developed by the experts of the sector and reviewed by our representatives.
   </p>
@@ -25,36 +30,24 @@
     On the other hand, scientists with a solid background in algorithms, high-performance computing, combinatorial optimization, machine learning, and many other fields, can upload on the platform their implementations. In this way, they will gain visibility and will have the opportunity to earn from the platform safely and without any need to incorporate their algorithms in an application or spend time in the development of a user interface.
     <br />
     <br />
-    <a href="https://github.com/mattianeroni/server-side-algorithms"><strong>View Web Site</a>
+    <a href="https://github.com/mattianeroni/server-side-algorithms-doc"><strong>View Web Site</strong></a>
     <br />
   </p>
 </div>
 
 
+## Table of contents
 
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#usage">Usage</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-        <li><a href="#examples">Examples</a></li>
-      </ul>
-    </li>
-    <li><a href="#content">Content</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
-  </ol>
-</details>
+- [About The Project](#about-the-project)
+  - [Why Server Side Algorithms](#why-server-side-algorithms)
+  - [Built With](#built-with)
+- [Usage](#usage)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Examples](#examples)
+- [Content](#content)
+- [Contact](#contact)
+- [Acknowledgments](#acknowledgments)
 
 
 
@@ -62,7 +55,19 @@
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
+
+### Why Server Side Algorithms
+
+
+Server Side Algorithms (SSA) is a self-maintained project. The idea comes from the necessity of some scientists very busy in their academic work to monetize and provide visibility to their creations. This platform constitutes a meeting point where scientists and developers more experienced in production software may benefit from each other.
+
+Our representatives provide safety of the infrastructure, and an accurate revision of all the solutions and relative documentation uploaded on the platform. To be accepted, an algorithm must be provided in readable ` Python >= 3.8 ` code and its documentation must respect the standards and guidelines required.
+
+The initial service will be very basic, but we have intention to provide a more accurate documentation, and a more and more powerful server as the number of users increase. 
+  
+You can find our documentation at the following link: (soon available). 
+
+
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -90,19 +95,7 @@ To get a local copy up and running follow these simple example steps.
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/mattianeroni/server-side-algorithms.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
+No installation is required. We will provide soon on [GitHub](https://github.com) a set of plug-in to easily communicate with the server by using the most widely used programming languages.
    
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -114,33 +107,17 @@ To get a local copy up and running follow these simple example steps.
 
 
 
-
-<!-- ROADMAP -->
 ## Content
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
+Available algorithms are clusterized into categories that the users have the possibility to create and customize:
 
-See the [open issues](https://github.com/github_username/repo_name/issues) for an accurate description of proposed features.
+- [ ] Sorting
+- [ ] Transportation
+- [ ] Health
+- [ ] Physics
+- [ ] Metaheuristics
+- [ ] ...
 
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-## Contributing
-
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -151,7 +128,7 @@ Don't forget to give the project a star! Thanks again!
 
 Mattia Neroni, Ph.D., Eng. - mneroni@unimore.it - LinkedIn: [mylinkedin]
 
-Project Link: https://github.com/mattianeroni/server-side-algorithms
+Project Link: https://github.com/mattianeroni/server-side-algorithms-doc
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -168,13 +145,13 @@ This project is completely self maintained.
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/mattianeroni/server-side-algorithms.svg?style=for-the-badge
-[contributors-url]: https://github.com/mattianeroni/server-side-algorithms/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/mattianeroni/server-side-algorithms.svg?style=for-the-badge
-[forks-url]: https://github.com/mattianeroni/server-side-algorithms/network/members
-[stars-shield]: https://img.shields.io/github/stars/mattianeroni/server-side-algorithms.svg?style=for-the-badge
-[stars-url]: https://github.com/mattianeroni/server-side-algorithms/stargazers
-[issues-shield]: https://img.shields.io/github/issues/mattianeroni/server-side-algorithms.svg?style=for-the-badge
-[issues-url]: https://github.com/mattianeroni/server-side-algorithms/issues
+[contributors-shield]: https://img.shields.io/github/contributors/mattianeroni/server-side-algorithms-doc.svg?style=for-the-badge
+[contributors-url]: https://github.com/mattianeroni/server-side-algorithms-doc/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/mattianeroni/server-side-algorithms-doc.svg?style=for-the-badge
+[forks-url]: https://github.com/mattianeroni/server-side-algorithms-doc/network/members
+[stars-shield]: https://img.shields.io/github/stars/mattianeroni/server-side-algorithms-doc.svg?style=for-the-badge
+[stars-url]: https://github.com/mattianeroni/server-side-algorithms-doc/stargazers
+[issues-shield]: https://img.shields.io/github/issues/mattianeroni/server-side-algorithms-doc.svg?style=for-the-badge
+[issues-url]: https://github.com/mattianeroni/server-side-algorithms-doc/issues
 [mylinkedin]: https://www.linkedin.com/in/mattia-neroni-081965101/
 [product-screenshot]: images/screenshot.png
