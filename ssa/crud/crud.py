@@ -1,8 +1,5 @@
 from sqlalchemy.orm import Session
-
-from typing import List 
-
-from . import models, schemas 
+from ssa import models, schemas 
 
 import crypt
 import hmac
@@ -28,7 +25,7 @@ def create_user(db: Session, user: schemas.UserCreate):
     salt = crypt.mksalt(crypt.METHOD_SHA512)
     password = crypt.crypt(user.password, salt=salt)
 
-    key = "cane" #"".join([secrets.choice(string.ascii_letters + string.digits + string.punctuation) for _ in range(16)])
+    key = "".join([secrets.choice(string.ascii_letters + string.digits + string.punctuation) for _ in range(16)])
     salt_key = crypt.mksalt(crypt.METHOD_SHA512)
     personal_key = crypt.crypt(key, salt=salt_key)
 
@@ -64,7 +61,7 @@ def update_user(db: Session, new_user: schemas.UserUpdate, user_id: int):
     db.commit()
 
 
-def update_user_amount(db: Session, user_id: int, amount: int):
+def update_user_amount(db: Session, user_id: int, amount: float):
     user =  db.query(models.User).filter(models.User.id == user_id).first()
     user.amount += amount
     db.commit()

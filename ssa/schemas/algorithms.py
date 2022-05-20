@@ -10,7 +10,7 @@ class AlgorithmCreate(BaseModel):
     Schema passed to create a new Algorithm
     """
     name : str 
-    cost : int 
+    cost : float
     desc : Union[str, None] = None
     readme : Union[str, None] = None
     category_id : int 
@@ -23,7 +23,7 @@ class AlgorithmBasic(BaseModel):
     """
     id : int 
     name : str 
-    cost : int
+    cost : float
     desc : Union[str, None] = None 
     category_id : int 
     author_id : int 

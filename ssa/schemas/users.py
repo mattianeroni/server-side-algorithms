@@ -12,7 +12,7 @@ class UserCreate(BaseModel):
     """
     email : EmailStr 
     password : str 
-    amount : int = 0
+    amount : float = 0.0
 
 
 class UserBasic(BaseModel):
@@ -46,7 +46,7 @@ class UserUpdate(BaseModel):
     """
     email : Optional[EmailStr] = None
     password : Optional[str] = None
-    amount : Optional[int] = None
+    amount : Optional[float] = None
 
 
 

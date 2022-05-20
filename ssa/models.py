@@ -13,7 +13,7 @@ class User(Base):
     email = Column(String, unique=True, index=True, nullable=False)
     password = Column(String, nullable=False)
     salt = Column(String, nullable=False, default="")
-    amount = Column(Integer, nullable=False, default=0)
+    amount = Column(Numeric, nullable=False, default=0.0)
     personal_key = Column(String, index=True, nullable=False)
     salt_key = Column(String, nullable=False, default="")
 
@@ -41,7 +41,7 @@ class Algorithm(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, unique=True, nullable=False)
     desc = Column(String(150), nullable=True, default="")
-    cost = Column(Integer, nullable=False)
+    cost = Column(Numeric, nullable=False)
     readme = Column(String, nullable=True)
 
     # Category the algorithm belongs to
