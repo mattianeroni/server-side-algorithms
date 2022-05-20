@@ -49,20 +49,22 @@ class UserUpdate(BaseModel):
     amount : Optional[int] = None
 
 
+
 class UserGetKey(BaseModel):
     """
-    Schema returned when a user key is required
+    Schema to pass to get a new personal key
     """
+    email : EmailStr
+    password : str
+
+
+class UserWithKey(BaseModel):
+    """
+    Schema like UserBasic but it returns the personal key as well
+    """
+    id : int 
     email : EmailStr
     personal_key : str
 
     class Config:
-        orm_mode = True
-
-
-class UserAskKey(BaseModel):
-    """
-    Schema to pass to get a user personal key
-    """
-    email : EmailStr
-    password : str
+        orm_mode = True 

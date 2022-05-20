@@ -16,9 +16,5 @@ setup(
     python_requires='>=3.8',
     classifiers=[
         "Development Status :: 3 - Alpha"
-    ],
-    install_requires=[
-        'numpy>=1.2.0',
-        'pandas',
-    ],
+    ]
 )

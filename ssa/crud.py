@@ -21,24 +21,22 @@ def get_user_by_email(db: Session, email: str):
 
 
 def get_users(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.User).offset(skip).limit(limit).all()
+    return db.query(models.User).offset(skip).limit(limit).all()  
 
 
-def get_user_by_key(db: Session, key: str):
-    return db.query(models.User).filter(models.User.personal_key == key).first()    
-
-
-def create_user(db: Session, user: schemas.UserCreate) -> schemas.User:
+def create_user(db: Session, user: schemas.UserCreate):
     salt = crypt.mksalt(crypt.METHOD_SHA512)
     password = crypt.crypt(user.password, salt=salt)
 
-    key = "".join([secrets.choice(string.ascii_letters + string.digits + string.punctuation) for _ in range(16)])
-    personal_key = crypt.crypt(key)
+    key = "cane" #"".join([secrets.choice(string.ascii_letters + string.digits + string.punctuation) for _ in range(16)])
+    salt_key = crypt.mksalt(crypt.METHOD_SHA512)
+    personal_key = crypt.crypt(key, salt=salt_key)
 
     db_user = models.User(
         email=user.email, 
         password=password, 
         salt=salt, 
+        salt_key=salt_key,
         personal_key=personal_key,
         amount=user.amount
     )
@@ -46,27 +44,28 @@ def create_user(db: Session, user: schemas.UserCreate) -> schemas.User:
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
+
+    db_user.personal_key = key
     return db_user
 
 
-def delete_user(db: Session, user_id: int) -> None:
+def delete_user(db: Session, user_id: int):
     db.query(models.User).filter(models.User.id == user_id).delete()
     db.commit()
 
 
-def delete_user_by_email(db: Session, email: str) -> None:
+def delete_user_by_email(db: Session, email: str):
     db.query(models.User).filter(models.User.email == email).delete()
     db.commit()
 
 
-def update_user(db: Session, new_user: schemas.UserUpdate, user_id: int) -> None:
+def update_user(db: Session, new_user: schemas.UserUpdate, user_id: int):
     db.query(models.User).filter(models.User.id == user_id).update(**new_user.dict())
     db.commit()
 
 
-def update_user_amount(db: Session, user_id: int, amount: int) -> None:
+def update_user_amount(db: Session, user_id: int, amount: int):
     user =  db.query(models.User).filter(models.User.id == user_id).first()
-    #new_amount = user.amount + amount
     user.amount += amount
     db.commit()
     db.refresh(user)

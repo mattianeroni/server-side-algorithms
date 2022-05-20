@@ -23,7 +23,7 @@ def get_db():
 
 # Users end points from here.
 
-@app.post("/users/", response_model=schemas.UserBasic)
+@app.post("/users/", response_model=schemas.UserWithKey)
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     db_user = crud.get_user_by_email(db, email=user.email)
     if db_user:
@@ -44,6 +44,13 @@ def get_user(user_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="User not found.")
     return db_user
 
+
+@app.get("/userbykey/{key}", response_model=schemas.User)
+def get_user(key: str, db: Session = Depends(get_db)):
+    db_user = crud.get_user_by_key(db, key=key)
+    if db_user is None:
+        raise HTTPException(status_code=404, detail="User not found.")
+    return db_user
 
 
 
