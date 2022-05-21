@@ -1,9 +1,8 @@
 from sqlalchemy import Column, ForeignKey, Integer, String, Numeric, DateTime, Boolean
 from sqlalchemy.orm import relationship
-
-from .database import Base
-
 import datetime
+
+from ssa.database import Base
 
 
 class User(Base):
@@ -14,7 +13,7 @@ class User(Base):
     password = Column(String, nullable=False)
     salt = Column(String, nullable=False, default="")
     amount = Column(Numeric, nullable=False, default=0.0)
-    personal_key = Column(String, index=True, nullable=False)
+    personal_key = Column(String, nullable=False)
     salt_key = Column(String, nullable=False, default="")
 
     # Back population of algorithms made by this user 
