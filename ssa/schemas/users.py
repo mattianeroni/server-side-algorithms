@@ -68,3 +68,11 @@ class UserWithKey(BaseModel):
 
     class Config:
         orm_mode = True 
+
+
+class UserDelete(BaseModel):
+    """
+    Schema to delete a user
+    """
+    email : EmailStr 
+    password : str 
