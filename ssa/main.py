@@ -36,7 +36,7 @@ async def get_users(skip: int = 0, limit: int = 100, db: AsyncSession = Depends(
 @app.get("/users/{user_id}", response_model=schemas.User)
 async def get_user(user_id: int, db: AsyncSession = Depends(get_session)):
     db_user = await crud.get_user(db, user_id=user_id)
-    if db_user is None:
+    if not db_user:
         raise HTTPException(status_code=404, detail="User not found.")
     return db_user
 
@@ -49,27 +49,29 @@ async def delete_user(user: schemas.UserDelete, db: AsyncSession = Depends(get_s
     return {"response" : res}
 
 
+
+
 # Categories end points from here.
 
-#@app.post("/categories/", response_model=schemas.CategoryBasic)
-#async def create_user(category: schemas.CategoryCreate):
-#    db_cat = await crud.get_category_by_name(db, name=category.name)
-#    if db_cat:
-#        raise HTTPException(status_code=400, detail="Category name already existing.")
-#    return await crud.create_category(db, category=category)
+@app.post("/categories/", response_model=schemas.CategoryBasic)
+async def create_category(category: schemas.CategoryCreate, db: AsyncSession = Depends(get_session)):
+    db_cat = await crud.get_category_by_name(db, name=category.name)
+    if db_cat:
+        raise HTTPException(status_code=400, detail="Category name already existing.")
+    return await crud.create_category(db, category=category)
 
 
-#@app.get("/categories/", response_model=List[schemas.CategoryBasic])
-#async def get_categories(skip: int = 0, limit: int = 100):
-#    return await crud.get_categories(db, skip=skip, limit=limit)
+@app.get("/categories/", response_model=List[schemas.CategoryBasic])
+async def get_categories(skip: int = 0, limit: int = 100, db: AsyncSession = Depends(get_session)):
+    return await crud.get_categories(db, skip=skip, limit=limit)
 
 
-#@app.get("/categories/{cat_id}", response_model=schemas.Category)
-#async def get_category(cat_id: int):
-#    db_cat = await crud.get_category(db, cat_id=cat_id)
-#    if db_cat is None:
-#        raise HTTPException(status_code=404, detail="Category not found.")
-#    return db_cat
+@app.get("/categories/{cat_id}", response_model=schemas.Category)
+async def get_category(cat_id: int, db: AsyncSession = Depends(get_session)):
+    db_cat = await crud.get_category(db, cat_id=cat_id)
+    if not db_cat:
+        raise HTTPException(status_code=404, detail="Category not found.")
+    return db_cat
 
 
 
@@ -78,7 +80,7 @@ async def delete_user(user: schemas.UserDelete, db: AsyncSession = Depends(get_s
 #import aiofiles
 
 #@app.post("/upload")
-#async def upload(file: UploadFile = File(...)):
+#async def upload(file: UploadFile = File(...), db: AsyncSession = Depends(get_session)):
 #    try:
 #        contents = await file.read()
 #        async with aiofiles.open(file.filename, 'wb') as f:

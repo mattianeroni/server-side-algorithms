@@ -13,6 +13,10 @@ import string
 import secrets 
 
 
+import asyncio
+import pandas as pd
+from ssa.database import engine 
+
 
 async def get_user(db: AsyncSession, user_id: int):
     """ GET method to get a user from his/her id. """
@@ -83,12 +87,25 @@ async def delete_user(db: AsyncSession, user: schemas.UserDelete):
     try:
         query = await db.execute(select(models.User).where(models.User.email == user.email))
         db_user = query.scalars().first()
+        
+        #await db.delete(db_user.calls)
+        
+        query_calls = await db.execute(select(models.Call).where(models.Call.user_id == db_user.id))
+        db_calls = query_calls.scalars().all() 
+
+        query_algs = await db.execute(select(models.Algorithm).where(models.Algorithm.author_id == db_user.id))
+        db_algs = query_algs.scalars().all()
+
+        for i in db_algs:
+            i.author_id = 0        
+        
+        #db_algs.author_id = [0] * len(db_algs)
 
         if db_user.password != crypt.crypt(user.password, salt=db_user.salt):
             return False
-    
-        await db.delete(db_user)
-        await db.commit()
+
+        #await db.delete(db_user)
+        await db.flush()
         return True
 
     except SQLAlchemyError as exception:
