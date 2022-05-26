@@ -31,6 +31,9 @@ class AlgorithmBasic(BaseModel):
     category_id : int 
     author_id : int 
 
+    class Config:
+        orm_mode = True
+
 
 class Algorithm(BaseModel):
     """
