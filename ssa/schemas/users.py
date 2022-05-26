@@ -21,6 +21,7 @@ class UserBasic(BaseModel):
     """
     id : int 
     email : EmailStr
+    personal_key : str
 
     class Config:
         orm_mode = True 

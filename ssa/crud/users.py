@@ -1,9 +1,8 @@
 from fastapi import HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import selectinload
-from sqlalchemy import update
-from sqlalchemy.future import select
+from sqlalchemy import update, delete, select, insert
+
 
 from ssa import models, schemas 
 
@@ -20,36 +19,27 @@ from ssa.database import engine
 
 async def get_user(db: AsyncSession, user_id: int):
     """ GET method to get a user from his/her id. """
-    try:
-        query = await db.execute(
-            select(models.User)
-                .where(models.User.id == user_id)
-                .options(selectinload(models.User.calls))
-                .options(selectinload(models.User.algorithms))
-        )
-        return query.scalars().first()
-    except SQLAlchemyError as exception:
-        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=repr(exception))
+    query = await db.execute(
+        select(models.User)
+            .where(models.User.id == user_id)
+            .options(selectinload(models.User.calls))
+            .options(selectinload(models.User.algorithms))
+    )
+    return query.scalars().first()
 
 
 
 async def get_user_by_email(db: AsyncSession, email: str):
     """ GET method to get a user from his/her email. """
-    try:
-        query = await db.execute(select(models.User).where(models.User.email == email))
-        return query.scalars().first()
-    except SQLAlchemyError as exception:
-        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=repr(exception))
+    query = await db.execute(select(models.User).where(models.User.email == email))
+    return query.scalars().first()
 
 
 
 async def get_users(db: AsyncSession, skip: int = 0, limit: int = 100):
     """ GET method to get all users at once """
-    try:
-        query = await db.execute(select(models.User).order_by(models.User.id).limit(limit).offset(skip))
-        return query.scalars().all()
-    except SQLAlchemyError as exception:
-        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=repr(exception))
+    query = await db.execute(select(models.User).order_by(models.User.id).limit(limit).offset(skip))
+    return query.scalars().all()
 
 
 
@@ -62,23 +52,17 @@ async def create_user(db: AsyncSession, user: schemas.UserCreate):
     salt_key = crypt.mksalt(crypt.METHOD_SHA512)
     personal_key = crypt.crypt(key, salt=salt_key)
 
-    try:
-        db_user = models.User(
-            email=user.email, 
-            password=password, 
-            salt=salt, 
-            salt_key=salt_key,
-            personal_key=personal_key,
-            amount=user.amount
-        )
-        db.add(db_user)
-        await db.flush()
-
-        db_user.personal_key = key
-        return db_user
-
-    except SQLAlchemyError as exception:
-        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=repr(exception))
+    db_user = models.User(
+        email=user.email, 
+        password=password, 
+        salt=salt, 
+        salt_key=salt_key,
+        personal_key=personal_key,
+        amount=user.amount
+    )
+    db.add(db_user)
+    await db.flush()
+    return schemas.UserWithKey(id=db_user.id, email=user.email, personal_key=key)
 
 
 
@@ -90,8 +74,8 @@ async def delete_user(db: AsyncSession, user: schemas.UserDelete):
         
         #await db.delete(db_user.calls)
         
-        query_calls = await db.execute(select(models.Call).where(models.Call.user_id == db_user.id))
-        db_calls = query_calls.scalars().all() 
+        #query_calls = await db.execute(select(models.Call).where(models.Call.user_id == db_user.id))
+        #db_calls = query_calls.scalars().all() #
 
         query_algs = await db.execute(select(models.Algorithm).where(models.Algorithm.author_id == db_user.id))
         db_algs = query_algs.scalars().all()

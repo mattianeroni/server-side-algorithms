@@ -1,4 +1,4 @@
-from pydantic import BaseModel 
+from pydantic import BaseModel, EmailStr
 from typing import Union, List, Optional
 
 from .calls import CallBasic
@@ -13,8 +13,11 @@ class AlgorithmCreate(BaseModel):
     cost : float
     desc : Union[str, None] = None
     readme : Union[str, None] = None
-    category_id : int 
-    author_id : int 
+    category_name : str 
+    author_email : EmailStr 
+    personal_key : str  
+    category_id : Optional[int] = None
+    author_id : Optional[int] = None
 
 
 class AlgorithmBasic(BaseModel):
@@ -45,6 +48,17 @@ class Algorithm(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+
+class AlgorithmDelete(BaseModel):
+    """
+    Schema passed to delete an algorithm.
+    NOTE: Only who knows the personal key of the author can delete it.
+    """
+    email : EmailStr 
+    personal_key : str 
+    name : str 
 
 
 
