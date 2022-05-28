@@ -58,3 +58,16 @@ async def delete_category(cat_id: int, db: AsyncSession = Depends(get_session)):
     if not res:
         raise HTTPException(status_code=400, detail="Category not found.")
     return {"ok" : res}
+
+
+@router.put("/{cat_id}", response_model=schemas.Category)
+async def update_category(cat_id: int, category: schemas.CategoryUpdate, db: AsyncSession = Depends(get_session)):
+    cat_db = await crud.get_category(db, cat_id=cat_id)
+    if not cat_db:
+        raise HTTPException(status_code=404, detail="Category not found.")
+
+    cat_db_samename = await crud.get_category_by_name(db, name=category.name)
+    if cat_db_samename:
+        raise HTTPException(status_code=400, detail="Category name already existing.")
+    
+    return await crud.update_category(db, category, cat_db)

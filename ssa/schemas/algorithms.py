@@ -13,11 +13,9 @@ class AlgorithmCreate(BaseModel):
     cost : float
     desc : Union[str, None] = None
     readme : Union[str, None] = None
-    category_name : str 
-    author_email : EmailStr 
+    category_id : int 
+    author_id : int
     personal_key : str  
-    category_id : Optional[int] = None
-    author_id : Optional[int] = None
 
 
 class AlgorithmBasic(BaseModel):

@@ -14,13 +14,17 @@ from .categories import (
     get_category_by_name,
     create_category,
     delete_category,
+    update_category
 )
-
 
 from .algorithms import (
     get_algorithm,
     get_algorithms,
     get_algorithm_by_name,
     get_algorithms_by_category,
+    get_algorithms_by_author,
+    get_algorithms_by_author_email,
     create_algorithm,
+    #delete_algorithm,
+    #update_algorithm
 )

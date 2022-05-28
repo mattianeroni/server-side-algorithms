@@ -46,6 +46,8 @@ async def delete_category(db: AsyncSession, cat_id: int):
     return True
 
 
-#async def update_category(db: AsyncSession, category: schemas.CategoryUpdate, cat_id: int):
-#    await db.query(models.Category).filter(models.Category.id == cat_id).update(**category.dict())
-#    await db.commit()
+async def update_category(db: AsyncSession, category: schemas.CategoryUpdate, cat_db: models.Category):
+    """ PUT method to update a category """
+    name, desc = category.name or cat_db.name, category.desc or cat_db.desc
+    await db.execute(update(models.Category).where(models.Category.id == cat_db.id).values(name=name, desc=desc))
+    return cat_db

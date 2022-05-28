@@ -39,7 +39,7 @@ class Algorithm(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, unique=True, nullable=False)
-    desc = Column(String(150), nullable=True, default="")
+    desc = Column(String, nullable=True, default="")
     cost = Column(Numeric, nullable=False)
     readme = Column(String, nullable=True)
 

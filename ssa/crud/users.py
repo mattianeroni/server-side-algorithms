@@ -68,32 +68,8 @@ async def create_user(db: AsyncSession, user: schemas.UserCreate):
 
 async def delete_user(db: AsyncSession, user: schemas.UserDelete):
     """ DELETE method to delete a user """
-    try:
-        query = await db.execute(select(models.User).where(models.User.email == user.email))
-        db_user = query.scalars().first()
-        
-        #await db.delete(db_user.calls)
-        
-        #query_calls = await db.execute(select(models.Call).where(models.Call.user_id == db_user.id))
-        #db_calls = query_calls.scalars().all() #
-
-        query_algs = await db.execute(select(models.Algorithm).where(models.Algorithm.author_id == db_user.id))
-        db_algs = query_algs.scalars().all()
-
-        for i in db_algs:
-            i.author_id = 0        
-        
-        #db_algs.author_id = [0] * len(db_algs)
-
-        if db_user.password != crypt.crypt(user.password, salt=db_user.salt):
-            return False
-
-        #await db.delete(db_user)
-        await db.flush()
-        return True
-
-    except SQLAlchemyError as exception:
-        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=repr(exception))
+    await db.execute(delete(models.User).where(models.User.email == user.email))
+    return True
 
 
 
