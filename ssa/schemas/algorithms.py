@@ -1,7 +1,7 @@
 from pydantic import BaseModel, EmailStr
 from typing import Union, List, Optional
 
-from .calls import CallBasic
+from .calls import Call
 from .categories import CategoryBasic
 
 
@@ -45,7 +45,7 @@ class Algorithm(BaseModel):
     category_id : int 
     author_id : int 
     category : CategoryBasic
-    calls : List[CallBasic]
+    calls : List[Call]
 
     class Config:
         orm_mode = True

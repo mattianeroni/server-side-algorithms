@@ -25,6 +25,16 @@ from .algorithms import (
     get_algorithms_by_author,
     get_algorithms_by_author_email,
     create_algorithm,
-    #delete_algorithm,
+    delete_algorithm,
     #update_algorithm
+)
+
+from .calls import (
+    get_calls,
+    get_call,
+    get_calls_by_algorithm,
+    get_calls_by_algorithm_name,
+    get_calls_by_author,
+    get_calls_by_author_email,
+    create_call
 )

@@ -21,6 +21,7 @@ app = FastAPI(title="ServerSideAlgorithms")
 app.include_router(api.users.router)
 app.include_router(api.categories.router)
 app.include_router(api.algorithms.router)
+app.include_router(api.calls.router)
 
 
 

@@ -6,8 +6,6 @@ from pydantic import EmailStr
 
 from ssa import models, schemas 
 
-from sqlalchemy.exc import SQLAlchemyError
-
 
 
 async def get_algorithms(db: AsyncSession, skip: int = 0, limit: int = 100):
@@ -77,5 +75,10 @@ async def create_algorithm(db: AsyncSession, algorithm: schemas.AlgorithmCreate)
     db.add(algorithm_db)
     await db.flush()
     return algorithm_db
+
+
+async def delete_algorithm(db: AsyncSession, algorithm: schemas.AlgorithmDelete):
+    await db.execute(delete(models.Algorithm).where(models.Algorithm.name == algorithm.name))
+    return True
     
     

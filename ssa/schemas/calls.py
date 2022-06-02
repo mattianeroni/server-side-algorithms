@@ -1,25 +1,13 @@
 import datetime 
-from pydantic import BaseModel 
+from pydantic import BaseModel, EmailStr
 
 
 class CallCreate(BaseModel):
     """
     Schema passed to create a new Call
     """
-    datetime : datetime.datetime 
-    success : bool 
-    user_id : int 
-    algorithm_id : int 
-
-
-class CallBasic(BaseModel):
-    """
-    Scehma used for the basic representation of a Call
-    """
-    id : int 
-    datetime : datetime.datetime 
-    success : bool 
-    user_id : int 
+    email : EmailStr
+    personal_key : str 
     algorithm_id : int 
 
 

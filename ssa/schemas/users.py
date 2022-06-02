@@ -1,7 +1,7 @@
 from pydantic import BaseModel, EmailStr
 from typing import List, Optional, Union 
 
-from .calls import CallBasic
+from .calls import Call
 from .algorithms import AlgorithmBasic
 
 
@@ -34,7 +34,7 @@ class User(BaseModel):
     """
     id : int 
     email : EmailStr 
-    calls : List[CallBasic] = []
+    calls : List[Call] = []
     algorithms : List[AlgorithmBasic] = []
 
     class Config:

@@ -51,7 +51,11 @@ async def create_algorithm(algorithm: schemas.AlgorithmCreate, db: AsyncSession 
     return await crud.create_algorithm(db, algorithm)
 
 
-    
-    
+@router.delete("/")
+async def delete_algorithm(algorithm: schemas.AlgorithmDelete, db: AsyncSession = Depends(get_session)):
+    res = await verify_key_by_email(db, email=algorithm.email, personal_key=algorithm.personal_key)
+    if not res:
+        raise HTTPException(status_code=400, detail="Uncorrect user details.")
+    return {"ok" : res}
 
     
