@@ -1,5 +1,6 @@
 from pydantic import BaseModel, EmailStr
 from typing import Union, List, Optional
+from fastapi import File, UploadFile
 
 from .calls import Call
 from .categories import CategoryBasic
@@ -12,7 +13,6 @@ class AlgorithmCreate(BaseModel):
     name : str 
     cost : float
     desc : Union[str, None] = None
-    readme : Union[str, None] = None
     category_id : int 
     author_id : int
     personal_key : str  
@@ -41,7 +41,6 @@ class Algorithm(BaseModel):
     name : str 
     cost : float 
     desc : Union[str, None] = None
-    readme : Union[str, None] = None
     category_id : int 
     author_id : int 
     category : CategoryBasic
@@ -69,6 +68,12 @@ class AlgorithmUpdate(BaseModel):
     """
     name : Optional[str] = None 
     cost : Optional[float] = None 
-    desc : Optional[str] = None 
-    readme : Optional[str] = None 
+    desc : Optional[str] = None  
     category_id : Optional[int] = None  
+
+
+class DocumentationUpload(BaseModel):
+    """ Schema used to upload the documentation that concern an algorithm """
+    name : str 
+    author : str 
+    personal_key : str 

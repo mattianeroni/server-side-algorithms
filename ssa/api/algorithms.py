@@ -58,4 +58,17 @@ async def delete_algorithm(algorithm: schemas.AlgorithmDelete, db: AsyncSession 
         raise HTTPException(status_code=400, detail="Uncorrect user details.")
     return {"ok" : res}
 
+
+@router.put("/{alg_id}", response_model=schemas.Algorithm)
+async def update_algorithm(alg_id: int, algorithm: schemas.AlgorithmUpdate, db: AsyncSession = Depends(get_session)):
+    alg_db = await crud.get_algorithm(db, alg_id=alg_id)
+    if not alg_db:
+        raise HTTPException(status_code=404, detail="Algorithm not found.")
+
+    alg_db_samename = await crud.get_algorithm_by_name(db, name=algorithm.name)
+    if alg_db_samename:
+        raise HTTPException(status_code=400, detail="Algorithm name already existing.")
+    
+    return await crud.update_algorithm(db, algorithm, alg_db)
+
     

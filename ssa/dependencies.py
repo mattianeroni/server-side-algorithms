@@ -2,11 +2,14 @@ from typing import AsyncGenerator
 from sqlalchemy.exc import SQLAlchemyError
 from fastapi import HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
+from fastapi.templating import Jinja2Templates
 from pydantic import EmailStr
 from sqlalchemy import update, delete, select, insert
 
 from ssa import schemas, models 
 from database import async_session
+from templates import templates
+
 import crypt
 
 
@@ -25,6 +28,9 @@ async def get_session() -> AsyncGenerator:
         finally:
             await session.close()
 
+
+async def get_templates() -> Jinja2Templates:
+    yield templates 
 
 async def verify_user(db: AsyncSession, user_id: int, password: str):
     query = await db.execute(select(models.User).where(models.User.id == user_id))
