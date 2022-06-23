@@ -4,8 +4,7 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
 from ssa import models, schemas, crud
-from ssa.dependencies import get_session, get_templates, verify_user_by_email, verify_user
-
+from ssa.dependencies import get_session
 
 router = APIRouter(
     tags=["website"],

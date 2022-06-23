@@ -17,6 +17,7 @@ import pandas as pd
 from ssa.database import engine 
 
 
+
 async def get_user(db: AsyncSession, user_id: int):
     """ GET method to get a user from his/her id. """
     query = await db.execute(

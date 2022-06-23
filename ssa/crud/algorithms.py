@@ -90,8 +90,8 @@ async def update_algorithm(db: AsyncSession, algorithm: schemas.AlgorithmUpdate,
     return alg_db
 
 
-async def delete_algorithm(db: AsyncSession, algorithm: schemas.AlgorithmDelete):
-    await db.execute(delete(models.Algorithm).where(models.Algorithm.name == algorithm.name))
+async def delete_algorithm(db: AsyncSession, alg_id: int):
+    await db.execute(delete(models.Algorithm).where(models.Algorithm.id == alg_id))
     return True
     
     

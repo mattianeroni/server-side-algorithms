@@ -3,7 +3,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from typing import List
 
 from ssa import models, schemas, crud
-from ssa.dependencies import get_session, verify_user_by_email, verify_user
+from ssa.dependencies import get_session, verify_token, verify_user, verify_user_by_email
+
 
 
 router = APIRouter(

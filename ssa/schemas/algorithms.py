@@ -7,21 +7,17 @@ from .categories import CategoryBasic
 
 
 class AlgorithmCreate(BaseModel):
-    """
-    Schema passed to create a new Algorithm
-    """
+    """ Schema passed to create a new Algorithm """
+    token : str 
     name : str 
     cost : float
     desc : Union[str, None] = None
     category_id : int 
     author_id : int
-    personal_key : str  
 
 
 class AlgorithmBasic(BaseModel):
-    """
-    Schema used for the basic representation of an Algorithm 
-    """
+    """ Schema used for the basic representation of an Algorithm """
     id : int 
     name : str 
     cost : float
@@ -34,9 +30,7 @@ class AlgorithmBasic(BaseModel):
 
 
 class Algorithm(BaseModel):
-    """
-    Schema used for the usual representation of an Algorithm
-    """
+    """ Schema used for the usual representation of an Algorithm """
     id : int 
     name : str 
     cost : float 
@@ -52,20 +46,14 @@ class Algorithm(BaseModel):
 
 
 class AlgorithmDelete(BaseModel):
-    """
-    Schema passed to delete an algorithm.
-    NOTE: Only who knows the personal key of the author can delete it.
-    """
-    email : EmailStr 
-    personal_key : str 
-    name : str 
+    """ Schema passed to delete an algorithm """
+    token : str  
 
 
 
 class AlgorithmUpdate(BaseModel):
-    """
-    Schema passed to update an Algorithm
-    """
+    """ Schema passed to update an Algorithm """
+    token : str 
     name : Optional[str] = None 
     cost : Optional[float] = None 
     desc : Optional[str] = None  
@@ -74,6 +62,4 @@ class AlgorithmUpdate(BaseModel):
 
 class DocumentationUpload(BaseModel):
     """ Schema used to upload the documentation that concern an algorithm """
-    name : str 
-    author : str 
-    personal_key : str 
+    token : str 

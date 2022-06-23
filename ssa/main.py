@@ -20,10 +20,6 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 #        await conn.run_sync(Base.metadata.drop_all)
 #        await conn.run_sync(Base.metadata.create_all)
 
-#@app.middleware("http")
-#async def mid(request: Request, call_next):
-#    print("Middleware")
-#    return await call_next(request)
 
 app.include_router(api.users.router)
 app.include_router(api.categories.router)

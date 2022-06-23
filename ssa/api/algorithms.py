@@ -4,7 +4,7 @@ from typing import List
 
 
 from ssa import models, schemas, crud
-from ssa.dependencies import get_session, verify_key, verify_key_by_email
+from ssa.dependencies import get_session, verify_token, verify_user, verify_user_by_email
 
 
 router = APIRouter(
@@ -51,11 +51,17 @@ async def create_algorithm(algorithm: schemas.AlgorithmCreate, db: AsyncSession 
     return await crud.create_algorithm(db, algorithm)
 
 
-@router.delete("/")
-async def delete_algorithm(algorithm: schemas.AlgorithmDelete, db: AsyncSession = Depends(get_session)):
+@router.delete("/{alg_id}")
+async def delete_algorithm(alg_id: int, algorithm: schemas.AlgorithmDelete, db: AsyncSession = Depends(get_session)):
     res = await verify_key_by_email(db, email=algorithm.email, personal_key=algorithm.personal_key)
     if not res:
         raise HTTPException(status_code=400, detail="Uncorrect user details.")
+
+    algorithm_db = await crud.get_algorithm(db, alg_id=alg_id)
+    if not algorithm_db:
+        raise HTTPException(status_code=404, detail="Algorithm not found.")
+
+    res = await crud.delete_algorithm(db, alg_id=alg_id)
     return {"ok" : res}
 
 

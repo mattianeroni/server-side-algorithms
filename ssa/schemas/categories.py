@@ -3,17 +3,14 @@ from typing import Union, Optional
 
 
 class CategoryCreate(BaseModel):
-    """
-    Schema used to create a new Category
-    """
+    """ Schema used to create a new Category """
+    token : str 
     name : str 
     desc : Union[str, None] = None
 
 
 class CategoryBasic(BaseModel):
-    """
-    Schema used to provide a basic representation of a Category
-    """
+    """ Schema used to provide a basic representation of a Category """
     id : int 
     name : str 
 
@@ -22,20 +19,22 @@ class CategoryBasic(BaseModel):
 
 
 class Category(BaseModel):
-    """
-    Schema generally used to represent a Category
-    """
+    """ Schema generally used to represent a Category """
     id : int 
     name : str 
-    desc : Union[str, None] = None
+    desc : str
 
     class Config:
         orm_mode = True
 
 
 class CategoryUpdate(BaseModel):
-    """
-    Schema passed to update a category
-    """
+    """ Schema passed to update a category """
+    token : str 
     name : Optional[str] = None 
     desc : Optional[str] = None
+
+
+class CategoryDelete(BaseModel):
+    """ Schema passed to the api to delete a category """
+    token : str 

@@ -11,6 +11,10 @@ from database import async_session
 from templates import templates
 
 import crypt
+import jwt
+from decouple import config
+
+PRIVATE_KEY = config("PRIVATE_KEY")
 
 
 async def get_session() -> AsyncGenerator:
@@ -32,7 +36,16 @@ async def get_session() -> AsyncGenerator:
 async def get_templates() -> Jinja2Templates:
     yield templates 
 
-async def verify_user(db: AsyncSession, user_id: int, password: str):
+
+async def verify_user(db: AsyncSession, user_id: int, password: str) -> bool:
+    """
+    Method used to verify a user by using his / her id.
+
+    :param db: the session.
+    :param user_id: the unique id that identifies the user
+    :param password: the provided password.
+    :return: True if the user is verified, False otherwise.
+    """
     query = await db.execute(select(models.User).where(models.User.id == user_id))
     user_db = query.scalars().first()
 
@@ -45,20 +58,15 @@ async def verify_user(db: AsyncSession, user_id: int, password: str):
     return True
 
 
-async def verify_key(db: AsyncSession, user_id: int, personal_key: str):
-    query = await db.execute(select(models.User).where(models.User.id == user_id))
-    user_db = query.scalars().first()
+async def verify_user_by_email(db: AsyncSession, email: EmailStr, password: str) -> bool:
+    """
+    Method used to verify a user by using his / her email.
 
-    if not user_db:
-        raise HTTPException(status_code=404, detail="User not found.")
-    
-    if user_db.personal_key != crypt.crypt(personal_key, salt=user_db.salt_key):
-        return False
-    
-    return True
-
-
-async def verify_user_by_email(db: AsyncSession, email: EmailStr, password: str):
+    :param db: the session.
+    :param email: the email of the user.
+    :param password: the provided password.
+    :return: True if the user is verified, False otherwise.
+    """
     query = await db.execute(select(models.User).where(models.User.email == email))
     user_db = query.scalars().first()
 
@@ -71,14 +79,21 @@ async def verify_user_by_email(db: AsyncSession, email: EmailStr, password: str)
     return True
 
 
-async def verify_key_by_email(db: AsyncSession, email: EmailStr, personal_key: str):
+async def create_token(email: str) -> str:
+    """ Method used to create a token with HS256 """
+    return jwt.encode({"email": email}, PRIVATE_KEY, algorithm="HS256")
+
+
+
+async def verify_token(db: AsyncSession, token : str) -> EmailStr:
+    """ Method used to verify and decode the token """
+    decrypted = jwt.decode(encoded, PRIVATE_KEY, algorithms="HS256")
+    email = decrypted["email"]
+
     query = await db.execute(select(models.User).where(models.User.email == email))
     user_db = query.scalars().first()
 
     if not user_db:
-        raise HTTPException(status_code=404, detail="User not found.")
+        raise HTTPException(status_code=404, detail="Token expired.")
     
-    if user_db.personal_key != crypt.crypt(personal_key, salt=user_db.salt_key):
-        return False
-    
-    return True
+    return email 

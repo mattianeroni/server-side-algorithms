@@ -1,4 +1,5 @@
-from .users import UserCreate, UserBasic, User, UserUpdate, UserGetKey, UserWithKey, UserDelete
-from .categories import CategoryCreate, CategoryBasic, Category, CategoryUpdate
+from .users import UserCreate, UserBasic, User, UserUpdate, UserDelete
+from .categories import CategoryCreate, CategoryBasic, Category, CategoryUpdate, CategoryDelete
 from .algorithms import AlgorithmCreate, AlgorithmBasic, AlgorithmUpdate, Algorithm, AlgorithmDelete, DocumentationUpload
 from .calls import Call, CallCreate
+from .auth import Login

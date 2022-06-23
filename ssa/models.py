@@ -14,8 +14,6 @@ class User(Base):
     password = Column(String, nullable=False)
     salt = Column(String, nullable=False, default="")
     amount = Column(Numeric, nullable=False, default=0.0)
-    personal_key = Column(String, nullable=False)
-    salt_key = Column(String, nullable=False, default="")
 
     # Back population of algorithms made by this user 
     algorithms = relationship("Algorithm", back_populates="author")

@@ -1,32 +1,25 @@
-from fastapi import APIRouter, HTTPException, Depends, Request
+from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
-from fastapi.responses import HTMLResponse, RedirectResponse
-from fastapi.templating import Jinja2Templates
+
 
 from ssa import models, schemas, crud
-from ssa.dependencies import get_session, get_templates, verify_user_by_email, verify_user
+from ssa.dependencies import get_session, verify_user_by_email, create_token
 
 
 router = APIRouter(
+    prefix="/",
     tags=["auth"],
     responses = {
         404 : {"description": "Not found"}, 
-        400 : {"description": "Bad request"},
-        409 : {"description": "Conflict"},
-    },
-    include_in_schema=False,
+        400 : {"description": "Bad request"}
+    }
 )
 
 
-
-@router.get("/login", response_class=HTMLResponse)
-async def login(request: Request, templates: Jinja2Templates = Depends(get_templates)):
-    #form = await request.json()
-    #print( form )
-    return templates.TemplateResponse("/login.html", {"request": request})
-
-
-@router.post("/login", response_class=HTMLResponse)
-async def login(request: Request, templates: Jinja2Templates = Depends(get_templates)):
-    
-    return templates.TemplateResponse("/index.html", {"request": request})
+@router.post("/login")
+def login (user: schemas.Login, db: AsyncSession = Depends(get_session)):
+    res = await verify_user_by_email(db, email=user.email, password=user.password)
+    if not res:
+        raise HTTPException(status_code=400, detail="Uncorrect user details.")
+    token = await create_token(user.email)
+    return {"token" : token}

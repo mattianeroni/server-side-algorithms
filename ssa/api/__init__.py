@@ -1,1 +1,1 @@
-from . import users, categories, algorithms, calls, auth, website
+from . import users, categories, algorithms, calls, website, auth

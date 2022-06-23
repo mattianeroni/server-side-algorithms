@@ -4,7 +4,7 @@ from typing import List
 
 
 from ssa import models, schemas, crud
-from ssa.dependencies import get_session, verify_key_by_email
+from ssa.dependencies import get_session, verify_token, verify_user, verify_user_by_email
 
 
 router = APIRouter(

@@ -9,12 +9,17 @@ greenlet==1.1.2
 h11==0.13.0
 httptools==0.4.0
 idna==3.3
+Jinja2==3.1.2
+MarkupSafe==2.1.1
 numpy==1.22.3
 pandas==1.4.2
+passlib==1.7.4
 psycopg2==2.9.3
 psycopg2-binary==2.9.3
 pydantic==1.9.0
+PyJWT==2.4.0
 python-dateutil==2.8.2
+python-decouple==3.6
 python-dotenv==0.20.0
 pytz==2022.1
 PyYAML==6.0
