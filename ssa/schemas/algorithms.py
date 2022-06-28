@@ -13,7 +13,6 @@ class AlgorithmCreate(BaseModel):
     cost : float
     desc : Union[str, None] = None
     category_id : int 
-    author_id : int
 
 
 class AlgorithmBasic(BaseModel):
@@ -35,7 +34,7 @@ class Algorithm(BaseModel):
     name : str 
     cost : float 
     desc : Union[str, None] = None
-    category_id : int 
+    category_id : int
     author_id : int 
     category : CategoryBasic
     calls : List[Call]
@@ -47,12 +46,14 @@ class Algorithm(BaseModel):
 
 class AlgorithmDelete(BaseModel):
     """ Schema passed to delete an algorithm """
+    id : int
     token : str  
 
 
 
 class AlgorithmUpdate(BaseModel):
     """ Schema passed to update an Algorithm """
+    id : int 
     token : str 
     name : Optional[str] = None 
     cost : Optional[float] = None 
@@ -62,4 +63,5 @@ class AlgorithmUpdate(BaseModel):
 
 class DocumentationUpload(BaseModel):
     """ Schema used to upload the documentation that concern an algorithm """
+    id : int 
     token : str 

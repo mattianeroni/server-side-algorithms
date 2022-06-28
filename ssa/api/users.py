@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from typing import List
 
 from ssa import models, schemas, crud
-from ssa.dependencies import get_session, verify_token, verify_user, verify_user_by_email
+from ssa.dependencies import get_session, verify_token
 
 
 
@@ -17,7 +17,7 @@ router = APIRouter(
     }
 )
 
-@router.post("/", response_model=schemas.UserWithKey)
+@router.post("/", response_model=schemas.UserBasic)
 async def create_user(user: schemas.UserCreate, db: AsyncSession = Depends(get_session)):
     db_user = await crud.get_user_by_email(db, email=user.email)
     if db_user:
@@ -40,13 +40,11 @@ async def get_user(user_id: int, db: AsyncSession = Depends(get_session)):
 
 @router.delete("/")
 async def delete_user(user: schemas.UserDelete, db: AsyncSession = Depends(get_session)):
-    verified = await verify_user_by_email(db, email=user.email, password=user.password)
-    if not verified:
-        raise HTTPException(status_code=404, detail="Password not correct or user not registered.")
-
-    algs_db = await crud.get_algorithms_by_author_email(db, email=user.email)
+    user_db = await verify_token(db, token=user.token)
+    
+    algs_db = await crud.get_algorithms_by_author(db, user_id=user_db.id)
     if algs_db:
         raise HTTPException(status_code=409, detail="Cannot delete author of existing algorithms.") 
     
-    res = await crud.delete_user(db, user)
+    res = await crud.delete_user(db, user_id=user_db.id)
     return {"ok" : res}

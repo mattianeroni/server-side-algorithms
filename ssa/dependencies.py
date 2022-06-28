@@ -85,7 +85,7 @@ async def create_token(email: str) -> str:
 
 
 
-async def verify_token(db: AsyncSession, token : str) -> EmailStr:
+async def verify_token(db: AsyncSession, token: str) -> models.User:
     """ Method used to verify and decode the token """
     decrypted = jwt.decode(encoded, PRIVATE_KEY, algorithms="HS256")
     email = decrypted["email"]
@@ -96,4 +96,21 @@ async def verify_token(db: AsyncSession, token : str) -> EmailStr:
     if not user_db:
         raise HTTPException(status_code=404, detail="Token expired.")
     
-    return email 
+    return user_db
+
+
+async def verify_token_admin(db: AsyncSession, token: str) -> models.User:
+    """ Method used to verify and decode the token, and check if the user is admin """
+    decrypted = jwt.decode(encoded, PRIVATE_KEY, algorithms="HS256")
+    email = decrypted["email"]
+
+    query = await db.execute(select(models.User).where(models.User.email == email))
+    user_db = query.scalars().first()
+
+    if not user_db:
+        raise HTTPException(status_code=404, detail="Token expired.")
+
+    if not user_db.role == 1:
+        raise HTTPException(status_code=400, detail="User is not admin.")
+    
+    return user_db

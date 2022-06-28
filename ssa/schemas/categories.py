@@ -30,6 +30,7 @@ class Category(BaseModel):
 
 class CategoryUpdate(BaseModel):
     """ Schema passed to update a category """
+    id : int 
     token : str 
     name : Optional[str] = None 
     desc : Optional[str] = None
@@ -37,4 +38,5 @@ class CategoryUpdate(BaseModel):
 
 class CategoryDelete(BaseModel):
     """ Schema passed to the api to delete a category """
+    id : int 
     token : str 

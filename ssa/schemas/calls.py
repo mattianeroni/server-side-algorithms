@@ -6,6 +6,7 @@ class CallCreate(BaseModel):
     """ Schema passed to create a new Call """
     token : str 
     algorithm_id : int 
+    success : bool = False
 
 
 class Call(BaseModel):

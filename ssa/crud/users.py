@@ -29,19 +29,21 @@ async def get_user(db: AsyncSession, user_id: int):
     return query.scalars().first()
 
 
-
 async def get_user_by_email(db: AsyncSession, email: str):
     """ GET method to get a user from his/her email. """
-    query = await db.execute(select(models.User).where(models.User.email == email))
+    query = await db.execute(
+        select(models.User)
+            .where(models.User.email == email)
+            .options(selectinload(models.User.calls))
+            .options(selectinload(models.User.algorithms))
+    )
     return query.scalars().first()
-
 
 
 async def get_users(db: AsyncSession, skip: int = 0, limit: int = 100):
     """ GET method to get all users at once """
     query = await db.execute(select(models.User).order_by(models.User.id).limit(limit).offset(skip))
     return query.scalars().all()
-
 
 
 async def create_user(db: AsyncSession, user: schemas.UserCreate):
@@ -66,10 +68,9 @@ async def create_user(db: AsyncSession, user: schemas.UserCreate):
     return schemas.UserWithKey(id=db_user.id, email=user.email, personal_key=key)
 
 
-
-async def delete_user(db: AsyncSession, user: schemas.UserDelete):
+async def delete_user(db: AsyncSession, user_id: int):
     """ DELETE method to delete a user """
-    await db.execute(delete(models.User).where(models.User.email == user.email))
+    await db.execute(delete(models.User).where(models.User.id == user_id))
     return True
 
 

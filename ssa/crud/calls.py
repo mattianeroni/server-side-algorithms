@@ -52,14 +52,11 @@ async def get_calls_by_algorithm_name(db: AsyncSession, name: str, skip: int = 0
     return query.scalars().all()
 
 
-async def create_call(db: AsyncSession, call_create: schemas.CallCreate):
-    user_query = await db.execute(select(models.User).where(models.User.email == call_create.email))
-    user_db = user_query.scalars().first()
-    
+async def create_call(db: AsyncSession, call_create: schemas.CallCreate, user_id: int): 
     call_db = models.Call(
         datetime = datetime.datetime.now(),
-        success = True,
-        user_id = user_db.id,
+        success = call_create.success,
+        user_id = user_id,
         algorithm_id = call_create.algorithm_id
     )
     db.add(call_db)

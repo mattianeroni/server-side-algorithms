@@ -63,10 +63,10 @@ async def get_algorithm_by_name(db: AsyncSession, name: str):
 
 
 
-async def create_algorithm(db: AsyncSession, algorithm: schemas.AlgorithmCreate):
+async def create_algorithm(db: AsyncSession, algorithm: schemas.AlgorithmCreate, user_id: int):
     algorithm_db = models.Algorithm(
         name = algorithm.name,
-        author_id = algorithm.author_id,
+        author_id = user_id,
         category_id = algorithm.category_id,
         desc = algorithm.desc,
         cost = algorithm.cost,

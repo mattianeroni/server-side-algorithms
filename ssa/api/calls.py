@@ -4,7 +4,7 @@ from typing import List
 
 
 from ssa import models, schemas, crud
-from ssa.dependencies import get_session, verify_token, verify_user, verify_user_by_email
+from ssa.dependencies import get_session, verify_token
 
 
 router = APIRouter(
@@ -24,20 +24,23 @@ async def get_calls(skip: int = 0, limit: int = 100, db: AsyncSession = Depends(
 
 @router.get("/{call_id}", response_model=schemas.Call)
 async def get_call(call_id : int, db: AsyncSession = Depends(get_session)):
-    db_call = await crud.get_call(db, call_id=call_id)
-    if not db_call:
+    call_db = await crud.get_call(db, call_id=call_id)
+    if not call_db:
         raise HTTPException(status_code=404, detail="Call not found.")
-    return db_call
+    return call_db
 
 
 @router.post("/", response_model=schemas.Call)
 async def create_call(call_create: schemas.CallCreate, db: AsyncSession = Depends(get_session)):
-    res = await verify_key_by_email(db, email=call_create.email, personal_key=call_create.personal_key)
-    if not res:
-        raise HTTPException(status_code=400, detail="Uncorrect user details.")
-
+    user_db = await verify_token(db, token=call_create.token)
+    
     alg_db = await crud.get_algorithm(db, alg_id=call_create.algorithm_id)
     if not alg_db:
         raise HTTPException(status_code=404, detail="Algorithm not found.")
+
+    if user_db.amount > alg_db.cost:
+        create_call.success = True
+    else:
+        create_call.success = False
     
-    return await crud.create_call(db, call_create)
+    return await crud.create_call(db, call_create=call_create, user_id=user_db.id)
