@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from typing import List
 
 from ssa import models, schemas, crud
-from ssa.dependencies import get_session, verify_token
+from ssa.dependencies import get_session, verify_token, verify_token_admin
 
 
 
@@ -63,4 +63,10 @@ async def update_user(user: schemas.UserUpdate, db: AsyncSession = Depends(get_s
 
 @router.put("/amount", response_model=schemas.User)
 async def update_user_amount(admin: schemas.UserUpdateAmount, db: AsyncSession = Depends(get_session)):
-    pass 
+    admin_db = await verify_token_admin(db, admin.token)
+
+    user_db = await crud.get_user(db, user_id=admin.user_id)
+    if not user_db:
+        raise HTTPException(status_code=404, detail="User not found.")
+    
+    return await crud.update_user_amount(db, amount=admin.amount, user_db=user_db)

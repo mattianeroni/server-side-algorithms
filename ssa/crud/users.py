@@ -8,6 +8,7 @@ from ssa import models, schemas
 
 import crypt
 import asyncio
+import decimal
 import pandas as pd
 from ssa.database import engine 
 
@@ -54,7 +55,7 @@ async def create_user(db: AsyncSession, user: schemas.UserCreate):
     )
     db.add(db_user)
     await db.flush()
-    return schemas.UserWithKey(id=db_user.id, email=user.email, personal_key=key)
+    return db_user
 
 
 async def delete_user(db: AsyncSession, user_id: int):
@@ -64,6 +65,7 @@ async def delete_user(db: AsyncSession, user_id: int):
 
 
 async def update_user(db: AsyncSession, user: schemas.UserUpdate, user_db: models.User):
+    """ PUT method to update a user email and password """
     email = user.email
     password, salt = user_db.password, user_db.salt 
     if user.password is not None:
@@ -74,9 +76,10 @@ async def update_user(db: AsyncSession, user: schemas.UserUpdate, user_db: model
     return user_db
 
 
-async def update_user_amount(db: Session, user_id: int, amount: float):
-    pass
-#    user = await db.query(models.User).filter(models.User.id == user_id).first()
-#    user.amount += amount
-#    await db.commit()
-#    await db.refresh(user)
+async def update_user_amount(db: AsyncSession, amount: float, user_db: models.User):
+    """ PUT method to update a user amount """
+    user_db.amount += decimal.Decimal(amount)
+    await db.flush()
+    return user_db
+
+    

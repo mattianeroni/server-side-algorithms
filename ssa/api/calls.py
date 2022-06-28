@@ -31,16 +31,11 @@ async def get_call(call_id : int, db: AsyncSession = Depends(get_session)):
 
 
 @router.post("/", response_model=schemas.Call)
-async def create_call(call_create: schemas.CallCreate, db: AsyncSession = Depends(get_session)):
-    user_db = await verify_token(db, token=call_create.token)
+async def create_call(call: schemas.CallCreate, db: AsyncSession = Depends(get_session)):
+    user_db = await verify_token(db, token=call.token)
     
-    alg_db = await crud.get_algorithm(db, alg_id=call_create.algorithm_id)
+    alg_db = await crud.get_algorithm(db, alg_id=call.algorithm_id)
     if not alg_db:
         raise HTTPException(status_code=404, detail="Algorithm not found.")
 
-    if user_db.amount > alg_db.cost:
-        create_call.success = True
-    else:
-        create_call.success = False
-    
-    return await crud.create_call(db, call_create=call_create, user_id=user_db.id)
+    return await crud.create_call(db, call=call, user_db=user_db, cost=alg_db.cost)

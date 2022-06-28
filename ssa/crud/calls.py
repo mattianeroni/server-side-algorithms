@@ -4,6 +4,7 @@ from sqlalchemy.orm import selectinload
 from sqlalchemy import update, delete, select, insert
 
 import datetime
+import decimal 
 
 from ssa import models, schemas 
 
@@ -52,14 +53,20 @@ async def get_calls_by_algorithm_name(db: AsyncSession, name: str, skip: int = 0
     return query.scalars().all()
 
 
-async def create_call(db: AsyncSession, call_create: schemas.CallCreate, user_id: int): 
+async def create_call(db: AsyncSession, call: schemas.CallCreate, user_db: models.User, cost: float): 
+    cost = decimal.Decimal(cost)
+    success = True if user_db.amount > cost else False 
+    
     call_db = models.Call(
         datetime = datetime.datetime.now(),
-        success = call_create.success,
-        user_id = user_id,
-        algorithm_id = call_create.algorithm_id
+        success = success,
+        user_id = user_db.id,
+        algorithm_id = call.algorithm_id
     )
     db.add(call_db)
+    
+    user_db.amount -= cost
+
     await db.flush()
     return call_db
 

@@ -7,7 +7,6 @@ from ssa.dependencies import get_session, verify_user_by_email, create_token
 
 
 router = APIRouter(
-    prefix="/",
     tags=["auth"],
     responses = {
         404 : {"description": "Not found"}, 
@@ -17,7 +16,7 @@ router = APIRouter(
 
 
 @router.post("/login")
-def login (user: schemas.Login, db: AsyncSession = Depends(get_session)):
+async def login (user: schemas.Login, db: AsyncSession = Depends(get_session)):
     res = await verify_user_by_email(db, email=user.email, password=user.password)
     if not res:
         raise HTTPException(status_code=400, detail="Uncorrect user details.")

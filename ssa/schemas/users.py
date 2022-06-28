@@ -18,6 +18,7 @@ class UserBasic(BaseModel):
     id : int 
     email : EmailStr
     role : int 
+    amount : float
 
     class Config:
         orm_mode = True 
@@ -29,6 +30,7 @@ class User(BaseModel):
     id : int 
     email : EmailStr 
     role : int
+    amount : float
     calls : List[Call] = []
     algorithms : List[AlgorithmBasic] = []
 
@@ -50,6 +52,6 @@ class UserDelete(BaseModel):
 
 class UserUpdateAmount(BaseModel):
     """ Schema to update a user amount """ 
-    id : int 
     token : str 
     amount : float 
+    user_id : int 
