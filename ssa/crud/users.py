@@ -7,11 +7,6 @@ from sqlalchemy import update, delete, select, insert
 from ssa import models, schemas 
 
 import crypt
-import hmac
-import string 
-import secrets 
-
-
 import asyncio
 import pandas as pd
 from ssa.database import engine 
@@ -51,16 +46,10 @@ async def create_user(db: AsyncSession, user: schemas.UserCreate):
     salt = crypt.mksalt(crypt.METHOD_SHA512)
     password = crypt.crypt(user.password, salt=salt)
 
-    key = "".join([secrets.choice(string.ascii_letters + string.digits + string.punctuation) for _ in range(16)])
-    salt_key = crypt.mksalt(crypt.METHOD_SHA512)
-    personal_key = crypt.crypt(key, salt=salt_key)
-
     db_user = models.User(
         email=user.email, 
         password=password, 
         salt=salt, 
-        salt_key=salt_key,
-        personal_key=personal_key,
         amount=user.amount
     )
     db.add(db_user)
@@ -74,14 +63,19 @@ async def delete_user(db: AsyncSession, user_id: int):
     return True
 
 
+async def update_user(db: AsyncSession, user: schemas.UserUpdate, user_db: models.User):
+    email = user.email
+    password, salt = user_db.password, user_db.salt 
+    if user.password is not None:
+        salt = crypt.mksalt(crypt.METHOD_SHA512)
+        password = crypt.crypt(user.password, salt=salt)
+
+    await db.execute(update(models.User).where(models.User.id == user_db.id).values(email=email, password=password, salt=salt))
+    return user_db
 
 
-#async def update_user(db: Session, new_user: schemas.UserUpdate, user_id: int):
-#    await db.query(models.User).filter(models.User.id == user_id).update(**new_user.dict())
-#    await db.commit()
-
-
-#async def update_user_amount(db: Session, user_id: int, amount: float):
+async def update_user_amount(db: Session, user_id: int, amount: float):
+    pass
 #    user = await db.query(models.User).filter(models.User.id == user_id).first()
 #    user.amount += amount
 #    await db.commit()

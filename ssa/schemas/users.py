@@ -37,13 +37,19 @@ class User(BaseModel):
 
 
 class UserUpdate(BaseModel):
-    """ Schema used to update a user email, password, or amount """
+    """ Schema used to update a user email or password """
     token : str 
     email : Optional[EmailStr] = None
     password : Optional[str] = None
-    amount : Optional[float] = None
 
 
 class UserDelete(BaseModel):
     """ Schema to delete a user """
     token : str
+
+
+class UserUpdateAmount(BaseModel):
+    """ Schema to update a user amount """ 
+    id : int 
+    token : str 
+    amount : float 

@@ -68,7 +68,7 @@ async def update_category(category: schemas.CategoryUpdate, db: AsyncSession = D
         raise HTTPException(status_code=404, detail="Category not found.")
 
     cat_db_samename = await crud.get_category_by_name(db, name=category.name)
-    if cat_db_samename:
+    if cat_db_samename and cat_db_samename != cat_db:
         raise HTTPException(status_code=400, detail="Category name already existing.")
     
     return await crud.update_category(db, category, cat_db)

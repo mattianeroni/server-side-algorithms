@@ -48,3 +48,19 @@ async def delete_user(user: schemas.UserDelete, db: AsyncSession = Depends(get_s
     
     res = await crud.delete_user(db, user_id=user_db.id)
     return {"ok" : res}
+
+
+@router.put("/", response_model=schemas.User)
+async def update_user(user: schemas.UserUpdate, db: AsyncSession = Depends(get_session)):
+    user_db = await verify_token(db, token=user.token)
+
+    other_user_db = await crud.get_user_by_email(db, email=user.email)
+    if other_user_db and other_user_db != user_db:
+        raise HTTPException(status_code=400, detail="Email already registered.")
+    
+    return await crud.update_user(db, user, user_db)
+
+
+@router.put("/amount", response_model=schemas.User)
+async def update_user_amount(admin: schemas.UserUpdateAmount, db: AsyncSession = Depends(get_session)):
+    pass 

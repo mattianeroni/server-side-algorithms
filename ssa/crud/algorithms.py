@@ -81,7 +81,7 @@ async def update_algorithm(db: AsyncSession, algorithm: schemas.AlgorithmUpdate,
     name, desc = algorithm.name or alg_db.name, algorithm.desc or alg_db.desc
     cost, category_id = algorithm.cost or alg_db.cost, algorithm.category_id or alg_db.category_id 
 
-    await db.execute(update(models.Algorithm).where(models.Algorithm.id == alg_id).values(
+    await db.execute(update(models.Algorithm).where(models.Algorithm.id == algorithm.id).values(
         name=name, 
         desc=desc,
         cost=cost, 

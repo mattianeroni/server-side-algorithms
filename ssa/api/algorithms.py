@@ -68,7 +68,7 @@ async def update_algorithm(algorithm: schemas.AlgorithmUpdate, db: AsyncSession 
         raise HTTPException(status_code=404, detail="Algorithm not found.")
 
     alg_db_samename = await crud.get_algorithm_by_name(db, name=algorithm.name)
-    if alg_db_samename:
+    if alg_db_samename and alg_db_samename != alg_db:
         raise HTTPException(status_code=400, detail="Algorithm name already existing.")
     
     user_db = await verify_token(db, token=algorithm.token)
