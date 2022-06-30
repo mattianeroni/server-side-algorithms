@@ -59,9 +59,3 @@ class AlgorithmUpdate(BaseModel):
     cost : Optional[float] = None 
     desc : Optional[str] = None  
     category_id : Optional[int] = None  
-
-
-class DocumentationUpload(BaseModel):
-    """ Schema used to upload the documentation that concern an algorithm """
-    id : int 
-    token : str 

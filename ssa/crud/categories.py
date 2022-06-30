@@ -31,7 +31,7 @@ async def get_categories(db: AsyncSession, skip: int = 0, limit: int = 100):
 
 async def create_category(db: AsyncSession, category: schemas.CategoryCreate):
     """ POST method to create category """
-    db_category = models.Category(**category.dict())
+    db_category = models.Category(name=category.name, desc=category.desc)
     db.add(db_category)
     await db.flush()
     return db_category

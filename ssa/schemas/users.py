@@ -18,7 +18,6 @@ class UserBasic(BaseModel):
     id : int 
     email : EmailStr
     role : int 
-    amount : float
 
     class Config:
         orm_mode = True 
@@ -30,7 +29,6 @@ class User(BaseModel):
     id : int 
     email : EmailStr 
     role : int
-    amount : float
     calls : List[Call] = []
     algorithms : List[AlgorithmBasic] = []
 

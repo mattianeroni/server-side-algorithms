@@ -12,6 +12,8 @@ from templates import templates
 
 import crypt
 import jwt
+import string 
+import secrets
 from decouple import config
 
 PRIVATE_KEY = config("PRIVATE_KEY")
@@ -120,3 +122,7 @@ async def verify_token_admin(db: AsyncSession, token: str) -> models.User:
         raise HTTPException(status_code=400, detail="User is not admin.")
     
     return user_db
+
+async def get_filename(len=8):
+    alphabet = string.ascii_letters + string.digits
+    return ''.join(secrets.choice(alphabet) for i in range(len)) + ".md"

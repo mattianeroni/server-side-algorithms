@@ -1,7 +1,6 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Depends, UploadFile, File, Form
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing import List
-
 
 from ssa import models, schemas, crud
 from ssa.dependencies import get_session, verify_token
@@ -13,7 +12,8 @@ router = APIRouter(
     responses = {
         404 : {"description": "Not found"}, 
         400 : {"description": "Bad request"},
-        409 : {"description": "Conflict"}
+        409 : {"description": "Conflict"},
+        422 : {"description": "Unprocessable entity"}
     }
 )
 
@@ -77,4 +77,24 @@ async def update_algorithm(algorithm: schemas.AlgorithmUpdate, db: AsyncSession 
     
     return await crud.update_algorithm(db, algorithm, alg_db)
 
+
+@router.post("/upload", response_model=schemas.Algorithm)
+async def upload_file(id: int = Form(...), token: str = Form(...), file: UploadFile = File(default=None), db: AsyncSession = Depends(get_session)):
+    if not file:
+        raise HTTPException(status_code=400, detail="File object not provided.")
+
+
+    if file.content_type != "text/plain":
+        raise HTTPException(status_code=400, detail="Wrong file format. It should be text/plain.")
+
+    user_db = await verify_token(db, token)
+
+    alg_db = await crud.get_algorithm(db, alg_id=id)
+    if not alg_db:
+        raise HTTPException(status_code=404, detail="Algorithm not found.")
+
+    if alg_db.author_id != user_db.id:
+        raise HTTPException(status_code=409, detail="Only the author can update an algorithm.")
+    
+    return await crud.upload_file(db, file=file, alg_db=alg_db)
     

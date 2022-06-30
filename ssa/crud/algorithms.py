@@ -1,11 +1,17 @@
-from fastapi import HTTPException, status, UploadFile, File 
+from fastapi import HTTPException, status, UploadFile
+
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 from sqlalchemy import update, delete, select, insert, join
+
 from pydantic import EmailStr 
+from starlette.datastructures import FormData
+
+import aiofiles
+import os 
 
 from ssa import models, schemas 
-
+from ssa.dependencies import get_filename
 
 
 async def get_algorithms(db: AsyncSession, skip: int = 0, limit: int = 100):
@@ -69,8 +75,7 @@ async def create_algorithm(db: AsyncSession, algorithm: schemas.AlgorithmCreate,
         author_id = user_id,
         category_id = algorithm.category_id,
         desc = algorithm.desc,
-        cost = algorithm.cost,
-        readme = algorithm.readme
+        cost = algorithm.cost
     )
     db.add(algorithm_db)
     await db.flush()
@@ -93,5 +98,22 @@ async def update_algorithm(db: AsyncSession, algorithm: schemas.AlgorithmUpdate,
 async def delete_algorithm(db: AsyncSession, alg_id: int):
     await db.execute(delete(models.Algorithm).where(models.Algorithm.id == alg_id))
     return True
-    
+
+
+async def upload_file(db: AsyncSession, file: UploadFile, alg_db: models.Algorithm):
+    try:
+        content = await file.read()
+    except:
+        raise HTTPException(status_code=400, detail="Error during file reading.")
+
+    if (filename := alg_db.readme) is not None:
+        os.remove("./documentation/" + filename )
+        
+    filename = await get_filename()
+    async with aiofiles.open("./documentation/" + filename, "wb") as f:
+        await f.write( content )
+
+    alg_db.readme = filename
+    await db.flush()
+    return alg_db 
     
