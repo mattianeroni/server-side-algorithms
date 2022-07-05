@@ -50,7 +50,6 @@ class AlgorithmDelete(BaseModel):
     token : str  
 
 
-
 class AlgorithmUpdate(BaseModel):
     """ Schema passed to update an Algorithm """
     id : int 

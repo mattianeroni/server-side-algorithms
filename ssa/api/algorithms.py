@@ -78,11 +78,10 @@ async def update_algorithm(algorithm: schemas.AlgorithmUpdate, db: AsyncSession 
     return await crud.update_algorithm(db, algorithm, alg_db)
 
 
-@router.post("/upload", response_model=schemas.Algorithm)
-async def upload_file(id: int = Form(...), token: str = Form(...), file: UploadFile = File(default=None), db: AsyncSession = Depends(get_session)):
+@router.post("/upload/readme", response_model=schemas.Algorithm)
+async def upload_readme(id: int = Form(...), token: str = Form(...), file: UploadFile = File(default=None), db: AsyncSession = Depends(get_session)):
     if not file:
         raise HTTPException(status_code=400, detail="File object not provided.")
-
 
     if file.content_type != "text/plain":
         raise HTTPException(status_code=400, detail="Wrong file format. It should be text/plain.")
@@ -96,5 +95,25 @@ async def upload_file(id: int = Form(...), token: str = Form(...), file: UploadF
     if alg_db.author_id != user_db.id:
         raise HTTPException(status_code=409, detail="Only the author can update an algorithm.")
     
-    return await crud.upload_file(db, file=file, alg_db=alg_db)
+    return await crud.upload_readme(db, file=file, alg_db=alg_db)
+
+
+@router.post("/upload/code", response_model=schemas.Algorithm)
+async def upload_code(id: int = Form(...), token: str = Form(...), file: UploadFile = File(default=None), db: AsyncSession = Depends(get_session)):
+    if not file:
+        raise HTTPException(status_code=400, detail="File object not provided.")
+
+    if file.content_type != "text/plain":
+        raise HTTPException(status_code=400, detail="Wrong file format. It should be text/plain.")
+
+    user_db = await verify_token(db, token)
+
+    alg_db = await crud.get_algorithm(db, alg_id=id)
+    if not alg_db:
+        raise HTTPException(status_code=404, detail="Algorithm not found.")
+
+    if alg_db.author_id != user_db.id:
+        raise HTTPException(status_code=409, detail="Only the author can update an algorithm.")
+    
+    return await crud.upload_code(db, file=file, alg_db=alg_db)
     

@@ -1,4 +1,4 @@
-from typing import AsyncGenerator
+from typing import AsyncGenerator, Set
 from sqlalchemy.exc import SQLAlchemyError
 from fastapi import HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -14,6 +14,7 @@ import crypt
 import jwt
 import string 
 import secrets
+from datetime import datetime 
 from decouple import config
 
 PRIVATE_KEY = config("PRIVATE_KEY")
@@ -83,7 +84,7 @@ async def verify_user_by_email(db: AsyncSession, email: EmailStr, password: str)
 
 async def create_token(email: str) -> str:
     """ Method used to create a token with HS256 """
-    return jwt.encode({"email": email}, PRIVATE_KEY, algorithm="HS256")
+    return jwt.encode({"email": email, "datetime": datetime.now().isoformat()}, PRIVATE_KEY, algorithm="HS256")
 
 
 
@@ -92,6 +93,7 @@ async def verify_token(db: AsyncSession, token: str) -> models.User:
     try:
         decrypted = jwt.decode(token, PRIVATE_KEY, algorithms="HS256")
         email = decrypted["email"]
+        #time = datetime.fromisoformat(decrypted["datetime"])
     except:
         raise HTTPException(status_code=409, detail="The token provided is not valid or expired.")
 
@@ -109,6 +111,7 @@ async def verify_token_admin(db: AsyncSession, token: str) -> models.User:
     try:
         decrypted = jwt.decode(token, PRIVATE_KEY, algorithms="HS256")
         email = decrypted["email"]
+        #time = datetime.fromisoformat(decrypted["datetime"])
     except:
         raise HTTPException(status_code=409, detail="The token provided is not valid or expired.")
 
@@ -123,6 +126,9 @@ async def verify_token_admin(db: AsyncSession, token: str) -> models.User:
     
     return user_db
 
-async def get_filename(len=8):
+async def get_filename(filenames: Set[str], len : int = 15, extension : str = ".md"):
     alphabet = string.ascii_letters + string.digits
-    return ''.join(secrets.choice(alphabet) for i in range(len)) + ".md"
+    name = 'f'.join(secrets.choice(alphabet) for i in range(len)) + extension
+    while name in filenames:
+        name = 'f'.join(secrets.choice(alphabet) for i in range(len)) + extension
+    return name

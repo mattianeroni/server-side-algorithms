@@ -100,7 +100,7 @@ async def delete_algorithm(db: AsyncSession, alg_id: int):
     return True
 
 
-async def upload_file(db: AsyncSession, file: UploadFile, alg_db: models.Algorithm):
+async def upload_readme (db: AsyncSession, file: UploadFile, alg_db: models.Algorithm):
     try:
         content = await file.read()
     except:
@@ -108,8 +108,11 @@ async def upload_file(db: AsyncSession, file: UploadFile, alg_db: models.Algorit
 
     if (filename := alg_db.readme) is not None:
         os.remove("./documentation/" + filename )
+    
+    readme_db = await db.execute(select(models.Algorithm.readme))
+    readme_files = set(readme_db.scalars())
         
-    filename = await get_filename()
+    filename = await get_filename(readme_files, extension=".md")
     async with aiofiles.open("./documentation/" + filename, "wb") as f:
         await f.write( content )
 
@@ -117,3 +120,23 @@ async def upload_file(db: AsyncSession, file: UploadFile, alg_db: models.Algorit
     await db.flush()
     return alg_db 
     
+
+async def upload_code (db: AsyncSession, file: UploadFile, alg_db: models.Algorithm):
+    try:
+        content = await file.read()
+    except:
+        raise HTTPException(status_code=400, detail="Error during file reading.")
+
+    if (filename := alg_db.source) is not None:
+        os.remove("./source/" + filename )
+    
+    source_db = await db.execute(select(models.Algorithm.source))
+    source_files = set(source_db.scalars())
+        
+    filename = await get_filename(source_files, extension=".txt")
+    async with aiofiles.open("./source/" + filename, "wb") as f:
+        await f.write( content )
+
+    alg_db.source = filename
+    await db.flush()
+    return alg_db 

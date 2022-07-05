@@ -27,7 +27,8 @@ from .algorithms import (
     create_algorithm,
     delete_algorithm,
     update_algorithm,
-    upload_file,
+    upload_readme,
+    upload_code,
 )
 
 from .calls import (

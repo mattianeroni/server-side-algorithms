@@ -8,8 +8,10 @@ from ssa.database import engine, Base, async_session
 from ssa.dependencies import get_session 
 from ssa import api
 
+import os 
 
-app = FastAPI(title="ServerSideAlgorithms", docs_url="/docs", redoc_url="/redocs")
+
+app = FastAPI(title="ServerSideAlgorithms", docs_url="/docs", redoc_url="/redocs", openapi_url=None)
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
@@ -19,6 +21,9 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 #    async with engine.begin() as conn:
 #        await conn.run_sync(Base.metadata.drop_all)
 #        await conn.run_sync(Base.metadata.create_all)
+#    for i in os.listdir("./documentation/") + os.listdir("./source/"):
+#        os.remove(i)
+
 
 
 app.include_router(api.users.router)
@@ -47,3 +52,14 @@ app.include_router(api.website.router)
 #
 #    return {"message": f"Successfuly uploaded {file.filename}"}
 
+
+#import uvicorn
+
+#if __name__ == '__main__':
+#    uvicorn.run("app.main:app",
+#                host="127.0.0.1",
+#                port=8000,
+#                reload=True,
+#                ssl_keyfile="./key.pem", 
+#                ssl_certfile="./cert.pem"
+#                )
