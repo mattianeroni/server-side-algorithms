@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from typing import List
 
 from ssa import models, schemas, crud
-from ssa.dependencies import get_session, verify_token
+from ssa.dependencies import get_session, verify_token, verify_token_admin
 
 
 router = APIRouter(
@@ -76,6 +76,19 @@ async def update_algorithm(algorithm: schemas.AlgorithmUpdate, db: AsyncSession 
         raise HTTPException(status_code=409, detail="Only the author can update an algorithm.")
     
     return await crud.update_algorithm(db, algorithm, alg_db)
+
+
+@router.put("/", response_model=schemas.Algorithm)
+async def validate_algorithm(algorithm : schemas.AlgorithmValidate, db: AsyncSession = Depends(get_session)):
+    alg_db = await crud.get_algorithm(db, alg_id=algorithm.id)
+    if not alg_db:
+        raise HTTPException(status_code=404, detail="Algorithm not found.")
+
+    admin_db = await verify_token_admin(db, token=algorithm.token)
+
+    await crud.validate_algorithm(db, alg_id=algorithm.id)
+    return alg_db
+
 
 
 @router.post("/upload/readme", response_model=schemas.Algorithm)

@@ -27,6 +27,7 @@ from .algorithms import (
     create_algorithm,
     delete_algorithm,
     update_algorithm,
+    validate_algorithm,
     upload_readme,
     upload_code,
 )
@@ -39,4 +40,9 @@ from .calls import (
     get_calls_by_author,
     get_calls_by_author_email,
     create_call
+)
+
+from .transactions import (
+    get_transactions,
+    create_transaction,
 )

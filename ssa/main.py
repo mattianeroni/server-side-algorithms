@@ -21,7 +21,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 #    async with engine.begin() as conn:
 #        await conn.run_sync(Base.metadata.drop_all)
 #        await conn.run_sync(Base.metadata.create_all)
-#    for i in os.listdir("./documentation/") + os.listdir("./source/"):
+#    for i in os.listdir("./documentation/code/") + os.listdir("./documentation/readme/"):
 #        os.remove(i)
 
 
@@ -31,26 +31,8 @@ app.include_router(api.categories.router)
 app.include_router(api.algorithms.router)
 app.include_router(api.calls.router)
 app.include_router(api.auth.router)
-app.include_router(api.website.router)
-
-
-
-
-#from fastapi import File, UploadFile
-#import aiofiles
-
-#@app.post("/upload")
-#async def upload(file: UploadFile = File(...), db: AsyncSession = Depends(get_session)):
-#    try:
-#        contents = await file.read()
-#        async with aiofiles.open(file.filename, 'wb') as f:
-#            await f.write(contents)
-#    except Exception:
-#        return {"message": "There was an error uploading the file"}
-#    finally:
-#        await file.close()
-#
-#    return {"message": f"Successfuly uploaded {file.filename}"}
+app.include_router(api.transactions.router)
+#app.include_router(api.website.router)
 
 
 #import uvicorn

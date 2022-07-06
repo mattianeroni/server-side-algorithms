@@ -38,4 +38,7 @@ async def create_call(call: schemas.CallCreate, db: AsyncSession = Depends(get_s
     if not alg_db:
         raise HTTPException(status_code=404, detail="Algorithm not found.")
 
-    return await crud.create_call(db, call=call, user_db=user_db, cost=alg_db.cost)
+    if not alg_db.trusted:
+        raise HTTPException(status_code=400, detail="Algorithm not validated yet.")
+
+    return await crud.create_call(db, call=call, user_db=user_db.id, alg_db=alg_db)

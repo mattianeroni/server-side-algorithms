@@ -55,7 +55,7 @@ async def verify_user(db: AsyncSession, user_id: int, password: str) -> bool:
     if not user_db:
         raise HTTPException(status_code=404, detail="User not found.")
     
-    if user_db.password != crypt.crypt(password, salt=user_db.salt):
+    if not secrets.compare_digest(user_db.password, crypt.crypt(password, salt=user_db.salt)):
         return False
     
     return True
@@ -76,7 +76,7 @@ async def verify_user_by_email(db: AsyncSession, email: EmailStr, password: str)
     if not user_db:
         raise HTTPException(status_code=404, detail="User not found.")
     
-    if user_db.password != crypt.crypt(password, salt=user_db.salt):
+    if not secrets.compare_digest(user_db.password, crypt.crypt(password, salt=user_db.salt)):
         return False
     
     return True
@@ -128,7 +128,7 @@ async def verify_token_admin(db: AsyncSession, token: str) -> models.User:
 
 async def get_filename(filenames: Set[str], len : int = 15, extension : str = ".md"):
     alphabet = string.ascii_letters + string.digits
-    name = 'f'.join(secrets.choice(alphabet) for i in range(len)) + extension
+    name = 'f' + ''.join(secrets.choice(alphabet) for i in range(len)) + extension
     while name in filenames:
-        name = 'f'.join(secrets.choice(alphabet) for i in range(len)) + extension
+        name = 'f' + ''.join(secrets.choice(alphabet) for i in range(len)) + extension
     return name

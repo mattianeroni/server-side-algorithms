@@ -23,6 +23,7 @@ class AlgorithmBasic(BaseModel):
     desc : Union[str, None] = None 
     category_id : int 
     author_id : int 
+    trusted : bool
 
     class Config:
         orm_mode = True
@@ -34,6 +35,7 @@ class Algorithm(BaseModel):
     name : str 
     cost : float 
     desc : Union[str, None] = None
+    trusted : bool 
     category_id : int
     author_id : int 
     category : CategoryBasic
@@ -58,3 +60,9 @@ class AlgorithmUpdate(BaseModel):
     cost : Optional[float] = None 
     desc : Optional[str] = None  
     category_id : Optional[int] = None  
+
+
+class AlgorithmValidate(BaseModel):
+    """ Schema used by the admin to validate an algorithm """ 
+    id : int 
+    token : str 

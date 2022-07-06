@@ -21,6 +21,9 @@ class User(Base):
     # Back population of calls made by this user
     calls = relationship("Call", back_populates="user")
 
+    # Back population of transactions that interest this user
+    calls = relationship("Transaction", back_populates="user")
+
 
 class Category(Base):
     __tablename__ = "categories"
@@ -42,6 +45,7 @@ class Algorithm(Base):
     cost = Column(Numeric, nullable=False)
     readme = Column(String, nullable=True)
     source = Column(String, nullable=True)
+    trusted = Column(Boolean, nullable=False, default=False)
 
     # Category the algorithm belongs to
     category_id = Column(Integer, ForeignKey('categories.id'))
@@ -69,3 +73,15 @@ class Call(Base):
     # Algorithm used
     algorithm_id = Column(Integer, ForeignKey('algorithms.id'))
     algorithm = relationship("Algorithm", back_populates="calls")
+
+
+class Transaction(Base):
+    __tablename__ = "transactions"
+
+    id = Column(Integer, primary_key=True, index=True)
+    datetime = Column(DateTime, default=datetime.datetime.now)
+    amount = Column(Numeric)
+    
+    # User interested by the transaction 
+    user_id = Column(Integer, ForeignKey('users.id'))
+    user = relationship("User", back_populates="calls")
