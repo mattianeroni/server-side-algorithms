@@ -9,8 +9,8 @@
 
 <br />
 <div align="center">
-  <a href="https://github.com/mattianeroni/server-side-algorithms-doc">
-    <img src="static/logo.png" alt="Logo" width="260" height="450">
+  <a href="https://github.com/mattianeroni/server-side-algorithms">
+    <img src="ssa/static/logo.png" alt="Logo" width="260" height="450">
   </a>
   
   <h1 align="center">Server Side Algorithms</h1>
@@ -20,7 +20,7 @@
   </p>
   
   <a href="https://github.com/mattianeroni/server-side-algorithms-doc">
-    <img src="static/scheme.png" alt="Logo" width="80%" height="60%">
+    <img src="ssa/static/scheme.png" alt="Logo" width="80%" height="60%">
   </a>
   
   <p align="justify">
@@ -54,7 +54,7 @@
 
 ## About The Project
 
-![screen](/static/screenshot.png)
+![screen](/ssa/static/screenshot.png)
 
 
 ### Why Server Side Algorithms
@@ -129,7 +129,7 @@ Available algorithms are clusterized into categories that the users have the pos
 
 Mattia Neroni, Ph.D., Eng. - mneroni@unimore.it - LinkedIn: [mylinkedin]
 
-Project Link: https://github.com/mattianeroni/server-side-algorithms-doc
+Project Link: https://github.com/mattianeroni/server-side-algorithms
 
 Documentation: https://server-side-algorithms.herokuapp.com/
 
@@ -148,12 +148,12 @@ This project is completely self maintained.
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/mattianeroni/server-side-algorithms-doc.svg?style=for-the-badge
-[contributors-url]: https://github.com/mattianeroni/server-side-algorithms-doc/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/mattianeroni/server-side-algorithms-doc.svg?style=for-the-badge
-[forks-url]: https://github.com/mattianeroni/server-side-algorithms-doc/network/members
-[stars-shield]: https://img.shields.io/github/stars/mattianeroni/server-side-algorithms-doc.svg?style=for-the-badge
-[stars-url]: https://github.com/mattianeroni/server-side-algorithms-doc/stargazers
-[issues-shield]: https://img.shields.io/github/issues/mattianeroni/server-side-algorithms-doc.svg?style=for-the-badge
-[issues-url]: https://github.com/mattianeroni/server-side-algorithms-doc/issues
+[contributors-shield]: https://img.shields.io/github/contributors/mattianeroni/server-side-algorithms.svg?style=for-the-badge
+[contributors-url]: https://github.com/mattianeroni/server-side-algorithms/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/mattianeroni/server-side-algorithms.svg?style=for-the-badge
+[forks-url]: https://github.com/mattianeroni/server-side-algorithms/network/members
+[stars-shield]: https://img.shields.io/github/stars/mattianeroni/server-side-algorithms.svg?style=for-the-badge
+[stars-url]: https://github.com/mattianeroni/server-side-algorithms/stargazers
+[issues-shield]: https://img.shields.io/github/issues/mattianeroni/server-side-algorithms.svg?style=for-the-badge
+[issues-url]: https://github.com/mattianeroni/server-side-algorithms/issues
 [mylinkedin]: https://www.linkedin.com/in/mattia-neroni-081965101/
