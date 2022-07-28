@@ -19,7 +19,7 @@
     Server Side Algorithms (SSA) is a platform with the objective to cover the gap between applications developers and scientists. Through a standard API described in our <a href="https://server-side-algorithms.herokuapp.com/">Documentation</a>, the registered developers are allowed to send HTTP requests to our server by requiring the execution of a specific algorithm on the provided data. 
   </p>
   
-  <a href="https://github.com/mattianeroni/server-side-algorithms-doc">
+  <a href="https://github.com/mattianeroni/server-side-algorithms">
     <img src="ssa/static/scheme.png" alt="Logo" width="80%" height="60%">
   </a>
   
@@ -31,7 +31,7 @@
   </p>
   <p align="center">
     <br /><br />
-    <a href="https://github.com/mattianeroni/server-side-algorithms-doc"><strong>View Web Site</strong></a>
+    <a href="https://github.com/mattianeroni/server-side-algorithms"><strong>View Web Site</strong></a>
     <br /><br />
   </p>
 </div>
@@ -127,7 +127,7 @@ Available algorithms are clusterized into categories that the users have the pos
 ## Contact
 
 
-Mattia Neroni, Ph.D., Eng. - mneroni@unimore.it - LinkedIn: [mylinkedin]
+Mattia Neroni, Ph.D., Eng. - mattianeroni@yahoo.it - LinkedIn: [mylinkedin]
 
 Project Link: https://github.com/mattianeroni/server-side-algorithms
 
