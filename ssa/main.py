@@ -1,6 +1,7 @@
 from typing import List
 from fastapi import FastAPI, HTTPException, Depends, Request
-from fastapi.staticfiles import StaticFiles
+#from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from ssa import crud, models, schemas
@@ -13,7 +14,7 @@ import os
 
 app = FastAPI(title="ServerSideAlgorithms", docs_url="/docs", redoc_url="/redocs", openapi_url=None)
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
+#app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # To restart the database
 #@app.on_event("startup")
@@ -25,6 +26,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 #        os.remove(i)
 
 
+#app.add_middleware(HTTPSRedirectMiddleware)
 
 app.include_router(api.users.router)
 app.include_router(api.categories.router)

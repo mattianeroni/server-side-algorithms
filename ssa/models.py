@@ -22,7 +22,7 @@ class User(Base):
     calls = relationship("Call", back_populates="user")
 
     # Back population of transactions that interest this user
-    calls = relationship("Transaction", back_populates="user")
+    transactions = relationship("Transaction", back_populates="user")
 
 
 class Category(Base):
@@ -84,4 +84,4 @@ class Transaction(Base):
     
     # User interested by the transaction 
     user_id = Column(Integer, ForeignKey('users.id'))
-    user = relationship("User", back_populates="calls")
+    user = relationship("User", back_populates="transactions")
