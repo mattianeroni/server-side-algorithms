@@ -47,6 +47,7 @@
   - [Installation](#installation)
   - [Examples](#examples)
 - [Content](#content)
+- [To Do](#todo)
 - [Contact](#contact)
 - [Acknowledgments](#acknowledgments)
 
@@ -112,13 +113,23 @@ No installation is required. We will provide soon on [GitHub](https://github.com
 
 Available algorithms are clusterized into categories that the users have the possibility to create and customize:
 
-- [ ] Sorting
-- [ ] Transportation
-- [ ] Health
-- [ ] Physics
-- [ ] Metaheuristics
-- [ ] ...
+- Sorting
+- Transportation
+- Health
+- Physics
+- Metaheuristics
+- ...
 
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+## Todo
+
+- [ ] Limit number of requests per minute
+- [ ] Enable HTTPS protocols
+- [ ] Develop a plug-in initially in Python
+- [ ] Buy a domain to make it work
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
