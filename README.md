@@ -127,9 +127,9 @@ Available algorithms are clusterized into categories that the users have the pos
 ## Todo
 
 - [ ] Limit number of requests per minute
-- [ ] Enable HTTPS protocols
 - [ ] Develop a plug-in initially in Python
 - [ ] Buy a domain to make it work
+- [ ] Implementation of Git plug-in to facilitate the uploading of code
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
