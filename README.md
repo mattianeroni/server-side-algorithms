@@ -138,7 +138,11 @@ Available algorithms are clusterized into categories that the users have the pos
 ## Contact
 
 
-Mattia Neroni, Ph.D., Eng. - mattianeroni@yahoo.it - LinkedIn: [mylinkedin]
+Mattia Neroni, Ph.D., Eng. - mattianeroni@yahoo.it 
+
+Website: https://mattianeroni.github.io
+
+LinkedIn: [mylinkedin]
 
 Project Link: https://github.com/mattianeroni/server-side-algorithms
 
