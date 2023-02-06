@@ -11,7 +11,6 @@ import aiofiles
 import os 
 
 from ssa import models, schemas 
-from ssa.dependencies import get_filename
 
 
 async def get_algorithms(db: AsyncSession, skip: int = 0, limit: int = 100):
@@ -69,13 +68,14 @@ async def get_algorithm_by_name(db: AsyncSession, name: str):
 
 
 
-async def create_algorithm(db: AsyncSession, algorithm: schemas.AlgorithmCreate, user_id: int):
+async def create_algorithm(db: AsyncSession, algorithm: schemas.AlgorithmCreate):
     algorithm_db = models.Algorithm(
         name = algorithm.name,
-        author_id = user_id,
         category_id = algorithm.category_id,
         desc = algorithm.desc,
-        cost = algorithm.cost
+        cost = algorithm.cost,
+        source = algorithm.source,
+        readme = algorithm.readme,
     )
     db.add(algorithm_db)
     await db.flush()
@@ -90,7 +90,9 @@ async def update_algorithm(db: AsyncSession, algorithm: schemas.AlgorithmUpdate,
         name=name, 
         desc=desc,
         cost=cost, 
-        category_id=category_id
+        category_id=category_id,
+        readme=readme,
+        source=source,
     ))
     return alg_db
 
@@ -98,10 +100,6 @@ async def update_algorithm(db: AsyncSession, algorithm: schemas.AlgorithmUpdate,
 async def delete_algorithm(db: AsyncSession, alg_id: int):
     await db.execute(delete(models.Algorithm).where(models.Algorithm.id == alg_id))
     return True
-
-
-async def validate_algorithm(db: AsyncSession, alg_id: int):
-    await db.execute(update(models.Algorithm).where(models.Algorithm.id == alg_id).values(trusted=True))
 
 
 async def upload_readme (db: AsyncSession, file: UploadFile, alg_db: models.Algorithm):

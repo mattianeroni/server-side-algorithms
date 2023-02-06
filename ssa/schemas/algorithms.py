@@ -22,8 +22,6 @@ class AlgorithmBasic(BaseModel):
     cost : float
     desc : Union[str, None] = None 
     category_id : int 
-    author_id : int 
-    trusted : bool
 
     class Config:
         orm_mode = True
@@ -34,10 +32,10 @@ class Algorithm(BaseModel):
     id : int 
     name : str 
     cost : float 
+    readme : str 
+    source : str
     desc : Union[str, None] = None
-    trusted : bool 
     category_id : int
-    author_id : int 
     category : CategoryBasic
     calls : List[Call]
 
@@ -59,6 +57,8 @@ class AlgorithmUpdate(BaseModel):
     name : Optional[str] = None 
     cost : Optional[float] = None 
     desc : Optional[str] = None  
+    source : Optional[str] = None  
+    readme : Optional[str] = None  
     category_id : Optional[int] = None  
 
 

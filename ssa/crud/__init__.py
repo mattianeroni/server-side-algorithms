@@ -27,7 +27,6 @@ from .algorithms import (
     create_algorithm,
     delete_algorithm,
     update_algorithm,
-    validate_algorithm,
     upload_readme,
     upload_code,
 )

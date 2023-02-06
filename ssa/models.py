@@ -15,14 +15,14 @@ class User(Base):
     salt = Column(String, nullable=False, default="")
     amount = Column(Numeric, nullable=False, default=0.0)
 
-    # Back population of algorithms made by this user 
-    algorithms = relationship("Algorithm", back_populates="author")
-
     # Back population of calls made by this user
     calls = relationship("Call", back_populates="user")
 
     # Back population of transactions that interest this user
     transactions = relationship("Transaction", back_populates="user")
+
+    # Back population of algorithms made by this user 
+    #algorithms = relationship("Algorithm", back_populates="author")
 
 
 class Category(Base):
@@ -45,18 +45,18 @@ class Algorithm(Base):
     cost = Column(Numeric, nullable=False)
     readme = Column(String, nullable=True)
     source = Column(String, nullable=True)
-    trusted = Column(Boolean, nullable=False, default=False)
+    #trusted = Column(Boolean, nullable=False, default=False)
 
     # Category the algorithm belongs to
     category_id = Column(Integer, ForeignKey('categories.id'))
     category = relationship("Category", back_populates="algorithms")
 
-    # Author of the algorithm 
-    author_id = Column(Integer, ForeignKey('users.id'))
-    author = relationship("User", back_populates="algorithms")
-
     # Back population of calls madeto this algorithm
     calls = relationship("Call", back_populates="algorithm")
+
+    # Author of the algorithm 
+    #author_id = Column(Integer, ForeignKey('users.id'))
+    #author = relationship("User", back_populates="algorithms")
 
 
 class Call(Base):

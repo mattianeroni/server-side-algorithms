@@ -57,8 +57,8 @@ async def get_calls_by_algorithm_name(db: AsyncSession, name: str, skip: int = 0
     return query.scalars().all()
 
 
-async def create_call(db: AsyncSession, call: schemas.CallCreate, user_db: models.User, alg_db: models.Algorithm): 
-    cost = decimal.Decimal(alg_db.cost)
+async def create_call(db: AsyncSession, call: schemas.CallCreate, user_db: models.User, cost: float): 
+    cost = decimal.Decimal(cost)
     success = True if user_db.amount > cost else False 
     
     call_db = models.Call(
@@ -70,8 +70,8 @@ async def create_call(db: AsyncSession, call: schemas.CallCreate, user_db: model
     db.add(call_db)
     
     if success:
-        await crud.create_transaction(db, user_db=alg_db.user, amount=decimal.Decimal(0.2) * cost)
-        await crud.create_transaction(db, user_db=user_db, amount=-cost)
+        #await crud.create_transaction(db, user_db=alg_db.user, amount=decimal.Decimal(0.2) * cost)
+        await crud.create_transaction(db, user_db=user_db, amount=cost)
 
     await db.flush()
     return call_db

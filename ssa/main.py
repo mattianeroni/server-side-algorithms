@@ -22,8 +22,7 @@ app = FastAPI(title="ServerSideAlgorithms", docs_url="/docs", redoc_url="/redocs
 #    async with engine.begin() as conn:
 #        await conn.run_sync(Base.metadata.drop_all)
 #        await conn.run_sync(Base.metadata.create_all)
-#    for i in os.listdir("./documentation/code/") + os.listdir("./documentation/readme/"):
-#        os.remove(i)
+    
 
 
 #app.add_middleware(HTTPSRedirectMiddleware)

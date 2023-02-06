@@ -125,10 +125,3 @@ async def verify_token_admin(db: AsyncSession, token: str) -> models.User:
         raise HTTPException(status_code=400, detail="User is not admin.")
     
     return user_db
-
-async def get_filename(filenames: Set[str], len : int = 15, extension : str = ".md"):
-    alphabet = string.ascii_letters + string.digits
-    name = 'f' + ''.join(secrets.choice(alphabet) for i in range(len)) + extension
-    while name in filenames:
-        name = 'f' + ''.join(secrets.choice(alphabet) for i in range(len)) + extension
-    return name

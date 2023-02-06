@@ -20,7 +20,7 @@ router = APIRouter(
 
 @router.post("/", response_model=schemas.CategoryBasic)
 async def create_category(category: schemas.CategoryCreate, db: AsyncSession = Depends(get_session)):
-    user_db = await verify_token(db, token=category.token)
+    user_db = await verify_token_admin(db, token=category.token)
     cat_db = await crud.get_category_by_name(db, name=category.name)
     if cat_db:
         raise HTTPException(status_code=400, detail="Category name already existing.")

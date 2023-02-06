@@ -42,9 +42,9 @@ async def create_algorithm(algorithm: schemas.AlgorithmCreate, db: AsyncSession 
     if not category_db:
         raise HTTPException(status_code=404, detail="Category not found.")
 
-    user_db = await verify_token(db, token=algorithm.token)
+    user_db = await verify_token_admin(db, token=algorithm.token)
     
-    return await crud.create_algorithm(db, algorithm=algorithm, user_id=user_db.id)
+    return await crud.create_algorithm(db, algorithm=algorithm)
 
 
 @router.delete("/")
@@ -53,9 +53,7 @@ async def delete_algorithm(algorithm: schemas.AlgorithmDelete, db: AsyncSession 
     if not algorithm_db:
         raise HTTPException(status_code=404, detail="Algorithm not found.")
 
-    user_db = await verify_token(db, token=algorithm.token)
-    if user_db.id != algorithm_db.author_id:
-        raise HTTPException(status_code=409, detail="Only the author can delete an algorithm.")
+    user_db = await verify_token_admin(db, token=algorithm.token)
 
     res = await crud.delete_algorithm(db, alg_id=algorithm.id)
     return {"ok" : res}
@@ -71,9 +69,7 @@ async def update_algorithm(algorithm: schemas.AlgorithmUpdate, db: AsyncSession 
     if alg_db_samename and alg_db_samename != alg_db:
         raise HTTPException(status_code=400, detail="Algorithm name already existing.")
     
-    user_db = await verify_token(db, token=algorithm.token)
-    if user_db.id != algorithm_db.author_id:
-        raise HTTPException(status_code=409, detail="Only the author can update an algorithm.")
+    user_db = await verify_token_admin(db, token=algorithm.token)
     
     return await crud.update_algorithm(db, algorithm, alg_db)
 
@@ -99,7 +95,7 @@ async def upload_readme(id: int = Form(...), token: str = Form(...), file: Uploa
     if file.content_type != "text/plain":
         raise HTTPException(status_code=400, detail="Wrong file format. It should be text/plain.")
 
-    user_db = await verify_token(db, token)
+    user_db = await verify_token_admin(db, token)
 
     alg_db = await crud.get_algorithm(db, alg_id=id)
     if not alg_db:
@@ -119,7 +115,7 @@ async def upload_code(id: int = Form(...), token: str = Form(...), file: UploadF
     if file.content_type != "text/plain":
         raise HTTPException(status_code=400, detail="Wrong file format. It should be text/plain.")
 
-    user_db = await verify_token(db, token)
+    user_db = await verify_token_admin(db, token)
 
     alg_db = await crud.get_algorithm(db, alg_id=id)
     if not alg_db:

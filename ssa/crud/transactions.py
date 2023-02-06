@@ -19,8 +19,8 @@ async def get_transactions(db: AsyncSession, user_id: int, skip: int = 0, limit:
     return query.scalars().all()
 
 
-async def create_transaction(db: AsyncSession, user_db: models.User, amount: float):
-    amount = decimal.Decimal(amount)
+async def create_transaction(db: AsyncSession, user_db: models.User, amount: decimal.Decimal):
+    #amount = decimal.Decimal(amount)
     trans_db = models.Transaction(
         datetime = datetime.datetime.now(),
         user_id = user_db.id,
@@ -28,7 +28,7 @@ async def create_transaction(db: AsyncSession, user_db: models.User, amount: flo
     )
     db.add(transaction_db)
     
-    user_db.amount += amount
+    user_db.amount -= amount
     await db.flush()
     return transaction_db
 
